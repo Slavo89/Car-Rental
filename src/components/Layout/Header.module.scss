@@ -1,0 +1,102 @@
+.heroHeader {
+	position: relative;
+	background-image: url('/public/hero_small.jpg');
+	background-size: cover;
+	background-position: center;
+	height: 75dvh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 0;
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.25);
+	}
+	.heroContent {
+		padding: 3rem 2rem;
+		width: 95%;
+		background-color: white;
+		border-radius: 10px;
+		z-index: 1;
+		h1 {
+			line-height: 3.5rem;
+			margin-bottom: 3rem;
+		}
+		.heroForm {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			.heroFieldset {
+				display: flex;
+				flex-direction: column;
+				border: none;
+				color: var(--font-grey);
+				input,
+				select {
+					width: 100%;
+					padding: 1.5rem 2rem;
+					background-color: inherit;
+					border: 1px solid var(--border-color);
+				}
+			}
+			.heroCalendarOptions {
+				display: flex;
+				justify-content: space-between;
+				border: none;
+				color: var(--font-grey);
+				label {
+					border: none;
+					width: 47%;
+					input {
+						width: 100%;
+						padding: 1.5rem 2rem;
+						border: 1px solid var(--border-color);
+					}
+				}
+			}
+			.searchBtn {
+				padding: 2rem 3rem;
+				width: 100%;
+				border: none;
+				background-color: #d6230c;
+				color: var(--white-color);
+				border-radius: 5px;
+				cursor: pointer;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				transition: all 0.3s;
+				&:hover {
+					transform: scale(1.03);
+					box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+				}
+			}
+		}
+	}
+}
+
+@media (width>= 600px) {
+	.heroHeader {
+		background-image: url('/public/hero_medium.jpg');
+	}
+}
+@media (width>= 770px) {
+	.heroHeader {
+		align-items: start;
+		.heroContent {
+			width: 500px;
+			margin-left: 6vw;
+			padding: 5.5rem 4rem;
+		}
+	}
+}
+
+@media (width>= 1200px) {
+	.heroHeader {
+		background-image: url('/public/hero_large.jpg');
+	}
+}

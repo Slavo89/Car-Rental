@@ -1,0 +1,59 @@
+.card {
+	padding: 1rem 1.5rem;
+	background-color: var(--white-color);
+	.cardImage {
+		display: flex;
+		margin: 0 auto;
+	}
+	.cardInfo {
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		.carYear,
+		.cancellationText,
+		.price {
+			display: inline;
+			color: var(--font-grey);
+		}
+		.cancellationText span {
+			color: var(--green-color);
+		}
+        .carInfo {
+            display: flex;
+            gap: 1.5rem;
+            div {
+                display: flex;
+                gap: .5rem;
+                align-items: center;
+                .icon {
+                    font-size: 2rem;
+                }
+            }
+        }
+		.price span {
+			font-size: 2.4rem;
+			font-weight: bold;
+			color: var(--blue-color);
+		}
+		& > :last-child {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.rentButton {
+				padding: 1.5rem 3.5rem;
+				background-color: var(--blue-color);
+				border: none;
+				border-radius: 3px;
+				color: var(--font-white);
+				cursor: pointer;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				transition: all 0.3s;
+				&:hover {
+					transform: scale(1.05);
+					box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+				}
+			}
+		}
+	}
+}
