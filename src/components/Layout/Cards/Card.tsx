@@ -1,30 +1,29 @@
-import React from 'react';
 import classes from './Card.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
 interface data {
-    img: string,
-    consumption: number,
-    door: number,
-    make: string,
-    model: string,
-    price: number,
-    passanger: number,
-    year: number
+	img: string;
+	consumption: number;
+	door: number;
+	make: string;
+	model: string;
+	price: number;
+	passanger: number;
+	year: number;
 }
 
 const Card = (props: data) => {
 	return (
-		<div className={classes.card}>
+		<div className={classes.card} >
 			<img
 				src={props.img}
-				alt={props.make}
-				height={270}
+				alt={`${props.make} ${props.model}`}
 				width={360}
+				height={280}
 				className={classes.cardImage}
 			></img>
 			<div className={classes.cardInfo}>
-				<h4 className={classes.carTitle}>{props.model}</h4>
+				<h4 className={classes.carTitle}>{props.make} {props.model}</h4>
 				<p className={classes.carYear}>{props.year}</p>
 				<p className={classes.cancellationText}>
 					<span>&#10003; Free cancellation up</span> to 48h before pick-up time

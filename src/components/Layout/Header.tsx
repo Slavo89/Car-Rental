@@ -28,11 +28,11 @@ const Header: React.FC = () => {
 					<fieldset className={classes.heroCalendarOptions}>
 						<label>
 							Pick up
-							<input />
+							<input id='dateInput' type='date' />
 						</label>
 						<label>
 							Return
-							<input />
+							<input id='dateInput' type='date'/>
 						</label>
 					</fieldset>
 					<button

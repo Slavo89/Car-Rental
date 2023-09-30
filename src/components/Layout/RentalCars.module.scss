@@ -1,3 +1,69 @@
 .rentalSection {
-    background-color: var(--grey-color);
+	background-color: black;
+	background-color: var(--grey-color);
+	.title {
+		font-size: 2.8rem;
+		text-align: center;
+		color: var(--blue-color);
+		margin-bottom: 3rem;
+	}
+	.buttons {
+		display: none;
+	}
+	.rentalContainer {
+		margin: 5rem 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+}
+
+@media (width>= 770px) {
+	.rentalSection {
+		.buttons {
+			// margin-bottom: 2rem;
+			display: flex;
+			justify-content: end;
+			gap: 0.5rem;
+			.leftBtn,
+			.rightBtn {
+				display: flex;
+				padding: 1rem;
+				color: var(--font-grey);
+				background-color: var(--white-color);
+				font-size: 2rem;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				transition: all 0.3s;
+				&:hover {
+					color: var(--font-white);
+					background-color: var(--blue-color);
+				}
+			}
+		}
+		.carousel {
+			width: 100%;
+			overflow: hidden;
+			transition: translate 0.5s;
+			.rentalContainer {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				gap: 3%;
+				flex-wrap: nowrap;
+				transition: translate 0.5s;
+			}
+		}
+	}
+}
+
+@media (width>= 1200px) {
+	.rentalSection {
+		.carousel {
+			.rentalContainer {
+				gap: 3%;
+			}
+		}
+	}
 }
