@@ -48,17 +48,21 @@
 			}
 			.heroCalendarOptions {
 				display: flex;
+				flex-direction: column;
 				justify-content: space-between;
+				gap: 1rem;
 				border: none;
 				color: var(--font-grey);
-				label {
-					border: none;
-					width: 47%;
-					input {
-						width: 100%;
-						padding: 1.5rem 2rem;
-						border: 1px solid var(--border-color);
+				@media (width>= 400px) {
+					flex-direction: row;
+					label {
+						width: 47%;
 					}
+				}
+				input {
+					width: 100%;
+					padding: 1.5rem 2rem;
+					border: 1px solid var(--border-color);
 				}
 			}
 			.searchBtn {

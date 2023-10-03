@@ -4,7 +4,6 @@ import classes from './Header.module.scss';
 const Header: React.FC = () => {
 	const onSubmitHandler = (event: FormEvent<HTMLButtonElement>) => {
 		event.preventDefault()
-		// console.log(event);
 	}
 
 	return (

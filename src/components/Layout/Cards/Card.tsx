@@ -1,18 +1,9 @@
 import classes from './Card.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
-interface data {
-	img: string;
-	consumption: number;
-	door: number;
-	make: string;
-	model: string;
-	price: number;
-	passanger: number;
-	year: number;
-}
+import { Data } from '../../../util/types';
 
-const Card = (props: data) => {
+const Card = (props: Data) => {
 	return (
 		<div className={classes.card} >
 			<img
@@ -20,6 +11,7 @@ const Card = (props: data) => {
 				alt={`${props.make} ${props.model}`}
 				width={360}
 				height={280}
+				loading='lazy'
 				className={classes.cardImage}
 			></img>
 			<div className={classes.cardInfo}>
@@ -31,7 +23,7 @@ const Card = (props: data) => {
 				<div className={classes.carInfo}>
 					<div>
 						<GiPerson className={classes.icon} />
-						<span>{props.passanger}</span>
+						<span>{props.passengers}</span>
 					</div>
 					<div>
 						<GiCarDoor className={classes.icon} />

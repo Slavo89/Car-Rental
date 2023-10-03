@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import classes from './Features.module.scss';
 import { MdAssignment, MdSupportAgent, MdPriceCheck } from 'react-icons/md';
 
-interface Feature {
+type Feature = {
 	id: number;
 	logo: ReactNode;
 	title: string;
