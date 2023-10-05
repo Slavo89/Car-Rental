@@ -1,0 +1,158 @@
+.carDetailsPage {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.detailsContent {
+	font-size: 1.4rem;
+}
+
+.heading {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 3rem;
+}
+
+.importantInfo {
+	color: var(--blue-color);
+	cursor: pointer;
+	& > * {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		transition: color 0.3s;
+		&:hover {
+			color: var(--red-color);
+		}
+	}
+}
+
+.detailsContent {
+	padding: 1rem 2rem;
+}
+
+.carInfo,
+.carOverview {
+	padding: 1rem 0;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.carImage {
+	display: flex;
+	margin: 0 auto;
+	width: min(100%, 360px);
+	height: auto;
+	object-fit: cover;
+}
+.carProperties {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.carYear {
+	display: inline;
+	color: var(--font-grey);
+	font-size: 1.4rem;
+}
+.carDetails {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	& > * {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	p {
+		color: var(--font-grey);
+	}
+}
+.icon {
+	font-size: 3rem;
+}
+
+.carOverview {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: start;
+	& > div {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.head {
+		color: var(--font-grey);
+	}
+}
+
+.label {
+	display: flex;
+	flex-direction: column;
+}
+
+.description {
+	padding: 1rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	& > p {
+		color: var(--font-grey);
+	}
+}
+
+// MEDIA QUERIES
+
+@media (width >= 380px) {
+	.importantInfo {
+		display: flex;
+		gap: 3rem;
+	}
+}
+
+@media (width >= 500px) {
+	.carDetails {
+		justify-content: space-around;
+	}
+}
+@media (width >= 770px) {
+	.detailsContent {
+	font-size: 1.6rem;
+}
+	.heading {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.carImage {
+		max-height: 230px;
+		margin: 0;
+	}
+
+	.carInfo {
+		display: flex;
+		gap: 1rem;
+	}
+	.carProperties {
+		justify-content: space-between;
+	}
+	.carDetails {
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.carOverview > div {
+		width: 100%;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+}
+
+@media (width >= 1025px) {
+	.carDetailsPage {
+		display: flex;
+		flex-direction: row;
+	}
+}

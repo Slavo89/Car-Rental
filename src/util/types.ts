@@ -7,6 +7,7 @@ export type Data = {
 	price: number;
 	passengers: number;
 	year: number;
+	onFocus: () => void;
 };
 
 export type ExtendedData = Data & {

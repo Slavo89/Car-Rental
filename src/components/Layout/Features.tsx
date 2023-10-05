@@ -13,19 +13,19 @@ const Features: React.FC = () => {
 	const FEATURES: Feature[] = [
 		{
 			id: 1,
-			logo: <MdAssignment />,
+			logo: <MdAssignment aria-hidden/>,
 			title: 'Car Insurance',
 			text: 'Travel safely – we handle all risks on our own. All of our cars have valid insurance policies.',
 		},
 		{
 			id: 2,
-			logo: <MdSupportAgent />,
+			logo: <MdSupportAgent aria-hidden/>,
 			title: 'Assistance on the Road',
 			text: 'Something happened on the road? Contact us and our team will come to help you along the way.',
 		},
 		{
 			id: 3,
-			logo: <MdPriceCheck />,
+			logo: <MdPriceCheck aria-hidden/>,
 			title: 'Best Cost',
 			text: 'Our focus is delivering top-notch service at the best cost for you. Discover the perfect balance between affordability and excellence with us.',
 		},

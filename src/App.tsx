@@ -1,19 +1,33 @@
 import React from 'react';
-import Header from './components/Layout/Header';
-import Footer from './components/Layout/Footer';
-import Features from './components/Layout/Features';
-import RentalCars from './components/Layout/RentalCars';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+// import MainPage from './pages/MainPage';
+import CarDetailsPage from './pages/CarDetailsPage';
+import Root from './pages/Root';
+
+const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <CarDetailsPage />,
+		children: [
+			{
+				index: true,
+				// element: < />,
+				// loader: gameListLoader,
+			},
+			// { path: ':vehicleId', element: < CarDetailsPage/> },
+		],
+	},
+]);
 
 const App: React.FC = () => {
 	return (
 		<>
-			<Header />
-			<main>
-				<RentalCars />
-
-				<Features />
-			</main>
-			<Footer />
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
 		</>
 	);
 };

@@ -14,21 +14,41 @@ type Props = {
 
 const Carousel: React.FC<Props> = (props) => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
+	// const [firstFocus, setFirstFocus] = useState<boolean>(true);
 
 	// SLIDE CAROUSEL FUNCTIONS
 
-	const slideRight = () => {
+	const slideNext = () => {
 		if (currentIndex === props.data.length - props.visibleCars) {
 			return;
 		}
 		setCurrentIndex(currentIndex + 1);
 	};
 
-	const slideLeft = () => {
+	const slidePrev = () => {
 		if (currentIndex === 0) {
 			return;
 		}
 		setCurrentIndex(currentIndex - 1);
+	};
+
+	// const handleFocus = () => {
+	// 	if (currentIndex === props.data.length - props.visibleCars) {
+	// 		return;
+	// 	}
+	// 	setCurrentIndex(currentIndex + 1);
+	// 	console.log(firstFocus);
+	// 	console.log(currentIndex);
+	// };
+
+	const handleFocus = (index: number) => {
+		if (index > 0) {
+			if (currentIndex === props.data.length - props.visibleCars) {
+				return;
+			}
+
+			setCurrentIndex(index);
+		}
 	};
 
 	const transformValue = `translate(-${
@@ -42,13 +62,13 @@ const Carousel: React.FC<Props> = (props) => {
 				<div className={classes.buttons}>
 					<button
 						className={classes.leftBtn}
-						onClick={slideLeft}
+						onClick={slidePrev}
 					>
 						<BsChevronLeft />
 					</button>
 					<button
 						className={classes.rightBtn}
-						onClick={slideRight}
+						onClick={slideNext}
 					>
 						<BsChevronRight />
 					</button>
@@ -56,13 +76,13 @@ const Carousel: React.FC<Props> = (props) => {
 			</div>
 			<div className={classes.carousel}>
 				<div
-					className={classes.rentalContainer}
+					className={classes.carouselContainer}
 					style={{
 						transform: transformValue,
 						transition: 'transform 0.3s ease-in-out',
 					}}
 				>
-					{props.data.map((vehicle: ExtendedData) => (
+					{props.data.map((vehicle: ExtendedData, index: number) => (
 						<Card
 							key={vehicle.id}
 							img={vehicle.img}
@@ -73,6 +93,8 @@ const Carousel: React.FC<Props> = (props) => {
 							price={vehicle.price}
 							passengers={vehicle.passengers}
 							year={vehicle.year}
+							// onFocus={handleFocus}
+							onFocus={() => handleFocus(index)}
 						/>
 					))}
 				</div>

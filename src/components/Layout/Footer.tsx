@@ -38,13 +38,13 @@ const Footer: React.FC = () => {
 					</div>
 					<div className={classes.social}>
 						<div className={classes.icon}>
-							<BsYoutube />
+							<BsYoutube aria-label='Youtube'/>
 						</div>
 						<div className={classes.icon}>
-							<BsFacebook />
+							<BsFacebook aria-label='Facebook'/>
 						</div>
 						<div className={classes.icon}>
-							<BsInstagram />
+							<BsInstagram aria-label='Instagram'/>
 						</div>
 					</div>
 				</div>
@@ -54,11 +54,12 @@ const Footer: React.FC = () => {
 			</div>
 			<div className={classes.goTopContainer}>
 				<button
+					aria-label='Scroll to top button'
 					type="button"
 					className={classes.goTop}
 					onClick={scrollToTopHandler}
 				>
-					<BsChevronUp />
+					<BsChevronUp aria-hidden/>
 				</button>
 			</div>
 		</footer>
