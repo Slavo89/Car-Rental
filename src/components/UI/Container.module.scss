@@ -1,5 +1,10 @@
 .container {
+	width: 100%;
+	padding: 3rem 0;
+	background-color: var(--grey-color);
+}
+
+.wrapper {
 	width: min(95%, 1600px);
 	margin-inline: auto;
-	z-index: -1;
 }

@@ -7,14 +7,13 @@ import { ExtendedData } from '../../util/types';
 
 type Props = {
 	data: ExtendedData[];
-	currentPercentage: number;
+	slidePercentage: number;
 	visibleCars: number;
 	carClass: 'B Class' | 'C Class' | 'D Class' | 'SUV';
 };
 
 const Carousel: React.FC<Props> = (props) => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
-	// const [firstFocus, setFirstFocus] = useState<boolean>(true);
 
 	// SLIDE CAROUSEL FUNCTIONS
 
@@ -32,45 +31,34 @@ const Carousel: React.FC<Props> = (props) => {
 		setCurrentIndex(currentIndex - 1);
 	};
 
-	// const handleFocus = () => {
+	// const handleFocus = (index: number) => {
 	// 	if (currentIndex === props.data.length - props.visibleCars) {
 	// 		return;
 	// 	}
-	// 	setCurrentIndex(currentIndex + 1);
-	// 	console.log(firstFocus);
-	// 	console.log(currentIndex);
+	// 	setCurrentIndex(index);
 	// };
 
-	const handleFocus = (index: number) => {
-		if (index > 0) {
-			if (currentIndex === props.data.length - props.visibleCars) {
-				return;
-			}
+	const transformValue = `translate(-${currentIndex * props.slidePercentage}%)`; // transformValue for sliding Carousel
 
-			setCurrentIndex(index);
-		}
-	};
-
-	const transformValue = `translate(-${
-		currentIndex * props.currentPercentage
-	}%)`; // transformValue for sliding Carousel
-
+	console.log(currentIndex);
 	return (
 		<>
 			<div className={classes.classHeadline}>
 				<h4 className={classes.classHeader}>{props.carClass}</h4>
 				<div className={classes.buttons}>
 					<button
+					aria-label='Slide to previous car'
 						className={classes.leftBtn}
 						onClick={slidePrev}
 					>
-						<BsChevronLeft />
+						<BsChevronLeft aria-hidden/>
 					</button>
 					<button
+					aria-label='Slide to next car'
 						className={classes.rightBtn}
 						onClick={slideNext}
 					>
-						<BsChevronRight />
+						<BsChevronRight aria-hidden/>
 					</button>
 				</div>
 			</div>
@@ -81,10 +69,13 @@ const Carousel: React.FC<Props> = (props) => {
 						transform: transformValue,
 						transition: 'transform 0.3s ease-in-out',
 					}}
+					role="group"
 				>
 					{props.data.map((vehicle: ExtendedData, index: number) => (
 						<Card
+							index={index + 1}
 							key={vehicle.id}
+							id={vehicle.id}
 							img={vehicle.img}
 							consumption={vehicle.consumption}
 							door={vehicle.door}
@@ -94,7 +85,7 @@ const Carousel: React.FC<Props> = (props) => {
 							passengers={vehicle.passengers}
 							year={vehicle.year}
 							// onFocus={handleFocus}
-							onFocus={() => handleFocus(index)}
+							// onFocus={() => handleFocus(index)}
 						/>
 					))}
 				</div>

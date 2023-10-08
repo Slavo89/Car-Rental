@@ -1,5 +1,5 @@
 .card {
-	padding: 1rem 1rem;
+	all: unset;
 	width: min(100%, 700px);
 	background-color: var(--white-color);
 	overflow: hidden;
@@ -10,7 +10,6 @@
 	justify-content: space-between;
 	flex: 0 0 auto;
 	&:focus-visible {
-		outline: none;
 		box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
 	}
 }
@@ -77,7 +76,6 @@
 
 @media not (prefers-reduced-motion) {
 	.card:hover {
-		scale: 1.005;
 		box-shadow:  0px 1px 4px rgba(0, 0, 0, 0.16); 
 	}
 	.rentButton:hover {

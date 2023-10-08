@@ -1,173 +1,237 @@
-// import React from 'react';
 import classes from './CarDetailsPage.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
-import { BsShieldFillCheck, BsInfoCircleFill } from 'react-icons/bs';
+import {
+	BsShieldFillCheck,
+	BsInfoCircleFill,
+	BsArrowLeftShort,
+} from 'react-icons/bs';
+import { useQuery } from '@tanstack/react-query';
 
-import { ExtendedData } from '../util/types';
+// import { ExtendedData } from '../util/types';
 import Container from '../components/UI/Container';
-import Header from '../components/Layout/Header';
+import { Link, useParams } from 'react-router-dom';
+import { fetchCarDetails } from '../util/http';
+import ErrorBlock from '../components/UI/ErrorBlock';
+import LoadingIndicator from '../components/UI/LoadingIndicator';
 
-const CarDetailsPage = (props: ExtendedData) => {
-	return (
-		<>
-			<Header />
-			<Container>
-				<div className={classes.carDetailsPage}>
-					<div className={classes.detailsContent}>
-						<div className={classes.heading}>
-							<a>Back to Search Results</a>
-							<div className={classes.importantInfo}>
-								<span>
-									<BsInfoCircleFill />
-									Importrant Information
-								</span>
-								<span>
-									<BsShieldFillCheck />
-									Insurance
-								</span>
-							</div>
-						</div>
-						<div className={classes.carInfo}>
-							<img
-								src="https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_low/v1/editorial/vhs/Renault-Megane.png"
-								alt={`${props.make} ${props.model}`}
-								width={360}
-								height={280}
-								loading="lazy"
-								className={classes.carImage}
-							/>
-							<div className={classes.carProperties}>
-								<h4 className={classes.carTitle}>
-									{props.make} {props.model} Renault Megane
-								</h4>
-								<p className={classes.carYear}>{props.year} 2016</p>
-								<div className={classes.carDetails}>
-									<div>
-										<GiPerson
-											aria-hidden
-											className={classes.icon}
-										/>
-										<div>
-											<p>Passangers</p>
-											<span>{props.passengers} 5</span>
-										</div>
-									</div>
-									<div>
-										<GiCarDoor
-											aria-hidden
-											className={classes.icon}
-										/>
-										<div>
-											<p>Door</p>
-											<span>{props.door} 4</span>
-										</div>
-									</div>
-									<div>
-										<GiJerrycan
-											aria-hidden
-											className={classes.icon}
-										/>
-										<div>
-											<p> Consumption</p>
-											<span>{props.consumption}5.5 l/100 km</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className={classes.carOverview}>
-							<h4>Overview</h4>
-							<div>
-								<div className={classes.label}>
-									<span className={classes.head}>Color</span>
-									<span className={classes.detail}>Red</span>
-								</div>
-								<div className={classes.label}>
-									<span className={classes.head}>Fuel Types</span>
-									<span className={classes.detail}>Gasoline</span>
-								</div>
-								<div className={classes.label}>
-									<span className={classes.head}>Drivetrain</span>
-									<span className={classes.detail}>AWD</span>
-								</div>
-								<div className={classes.label}>
-									<span className={classes.head}>Transmission</span>
-									<span className={classes.detail}>Manual</span>
-								</div>
-								<div className={classes.label}>
-									<span className={classes.head}>Class</span>
-									<span className={classes.detail}>C</span>
-								</div>
-							</div>
-						</div>
-						<div className={classes.description}>
-							<h4>Description</h4>
-							<p>
-								Collision Damage Waiver and Theft Protection are included with
-								this car. It covers damage and theft of the vehicle with the
-								exclusion of damage or loss of tyres, windscreen, glass and
-								undercarriage.
-							</p>
-							<p>
-								The car has a damage excess of GBP 1205.0 (Includes tax) and a
-								theft excess of GBP 1205.0 (Includes tax). Please ensure that
-								you have the excess amount available on your card when you pick
-								up the car.
-							</p>
+const CarDetailsPage = () => {
+	const params = useParams();
+
+	const { data, isPending, isError, error } = useQuery({
+		queryKey: ['details', params.id],
+		queryFn: () => fetchCarDetails(params.id),
+		// staleTime: 10000,
+	});
+
+	let content;
+
+	if (data) {
+		content = (
+			<div className={classes.carDetailsPage}>
+				<div className={classes.detailsContent}>
+					<div className={classes.heading}>
+						<Link
+							to={`/`}
+							className={classes.link}
+						>
+							<BsArrowLeftShort aria-hidden />
+							Back to Search Results
+						</Link>
+						<div className={classes.importantInfo}>
+							<span>
+								<BsInfoCircleFill aria-hidden />
+								<span>Importrant Information</span>
+							</span>
+							<span>
+								<BsShieldFillCheck aria-hidden />
+								<span>Insurance</span>
+							</span>
 						</div>
 					</div>
-					<div>
-						<div>
-							<span>${props.price}28 / day</span>
+					<div className={classes.carInfo}>
+						<img
+							src={data.img}
+							alt={`${data.make} ${data.model}`}
+							width={360}
+							height={280}
+							loading="lazy"
+							className={classes.carImage}
+						/>
+						<div className={classes.carProperties}>
 							<div>
-								<fieldset
-									aria-label="Choose pickup and return date"
-									className={classes.heroCalendarOptions}
-								>
-									<label>
-										Pick up
-										<input
-											id="dateInput"
-											type="date"
-										/>
-									</label>
-									<label>
-										Return
-										<input
-											id="dateInput"
-											type="date"
-										/>
-									</label>
-								</fieldset>
+								<h4 className={classes.carTitle}>
+									{data.make} {data.model}
+								</h4>
+								<p className={classes.carYear}>{data.year}</p>
+							</div>
+							<div className={classes.carDetails}>
 								<div>
-									<h4>Additional Options:</h4>
-									<form action="submit">
-										<label>
-											<input type="checkbox" />
-											<span>Child seat: $3 /day</span>
-										</label>
-										<label>
-											<input type="checkbox" />
-											<span>Baby chair: $3 /day</span>
-										</label>
-										<label>
-											<input type="checkbox" />
-											<span>GPS: $2 /day</span>
-										</label>
-										<label>
-											<input type="checkbox" />
-											<span>Roof rack: $5 /day</span>
-										</label>
-                                    </form>
-                                    <span>Total: $0.00 </span>
-                                </div>
-                                <button>Rent Now</button>
+									<GiPerson
+										aria-hidden
+										className={classes.icon}
+									/>
+									<div>
+										<p>Passangers</p>
+										<span>{data.passengers}</span>
+									</div>
+								</div>
+								<div>
+									<GiCarDoor
+										aria-hidden
+										className={classes.icon}
+									/>
+									<div>
+										<p>Door</p>
+										<span>{data.door}</span>
+									</div>
+								</div>
+								<div>
+									<GiJerrycan
+										aria-hidden
+										className={classes.icon}
+									/>
+									<div>
+										<p> Consumption</p>
+										<span>{data.consumption} l/100 km</span>
+									</div>
+								</div>
 							</div>
 						</div>
+					</div>
+					<div className={classes.carOverview}>
+						<h4>Overview</h4>
+						<div>
+							<div className={classes.label}>
+								<span className={classes.head}>Color</span>
+								<span className={classes.detail}>{data.color}</span>
+							</div>
+							<div className={classes.label}>
+								<span className={classes.head}>Fuel Types</span>
+								<span className={classes.detail}>{data['fuel type']}</span>
+							</div>
+							<div className={classes.label}>
+								<span className={classes.head}>Drivetrain</span>
+								<span className={classes.detail}>{data.drivetrain}</span>
+							</div>
+							<div className={classes.label}>
+								<span className={classes.head}>Transmission</span>
+								<span className={classes.detail}>{data.transmission}</span>
+							</div>
+							<div className={classes.label}>
+								<span className={classes.head}>Class</span>
+								<span className={classes.detail}>{data.class}</span>
+							</div>
+						</div>
+					</div>
+					<div className={classes.description}>
+						<h4>Description</h4>
+						<p>
+							Collision Damage Waiver and Theft Protection are included with
+							this car. It covers damage and theft of the vehicle with the
+							exclusion of damage or loss of tyres, windscreen, glass and
+							undercarriage.
+						</p>
+						<p>
+							The car has a damage excess of GBP 1205.0 (Includes tax) and a
+							theft excess of GBP 1205.0 (Includes tax). Please ensure that you
+							have the excess amount available on your card when you pick up the
+							car.
+						</p>
+					</div>
+					<div className={classes.features}>
+						<h4>Following for free</h4>
+						<ul className={classes.list}>
+							<li className={classes.listItem}>&#10003; Free cancellation</li>
+							<li className={classes.listItem}>
+								&#10003; Rental Car Insurance
+							</li>
+							<li className={classes.listItem}>&#10003; No credit card fees</li>
+							<li className={classes.listItem}>&#10003; Local taxes</li>
+						</ul>
 					</div>
 				</div>
+				<div className={classes.formContent}>
+					<span className={classes.priceLabel}>
+						${data.price}.00 <span>/ day</span>
+					</span>
+					<div className={classes.formContainer}>
+						<fieldset
+							aria-label="Choose pickup and return date"
+							className={classes.heroCalendarOptions}
+						>
+							<label>
+								Pick-Up
+								<input
+									id="dateInput"
+									type="date"
+								/>
+							</label>
+							<label>
+								Return
+								<input
+									id="dateInput"
+									type="date"
+								/>
+							</label>
+						</fieldset>
+						<div className={classes.options}>
+							<h4>Additional Options:</h4>
+							<form className={classes.form}>
+								<label>
+									<input
+										type="checkbox"
+										data-calculate="3"
+										name="seat"
+									/>
+									<span>Child seat: $3 /day</span>
+								</label>
+								<label>
+									<input
+										type="checkbox"
+										data-calculate="3"
+										name="chair"
+									/>
+									<span>Baby chair: $3 /day</span>
+								</label>
+								<label>
+									<input
+										type="checkbox"
+										data-calculate="2"
+										name="gps"
+									/>
+									<span>GPS: $2 /day</span>
+								</label>
+								<label>
+									<input
+										type="checkbox"
+										data-calculate="5"
+										name="rack"
+									/>
+									<span>Roof rack: $5 /day</span>
+								</label>
+							</form>
+							<p className={classes.totalAmount}>Total: ${data.price}.00 </p>
+						</div>
+						<button className={classes.rentButton}>Rent Now</button>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<main>
+			<Container>
+				{isPending && <LoadingIndicator />}
+				{isError && (
+					<ErrorBlock
+						title="An error occured"
+						message={error.message}
+					/>
+				)}
+				{content}
 			</Container>
-		</>
+		</main>
 	);
 };
 

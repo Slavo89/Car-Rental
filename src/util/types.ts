@@ -1,5 +1,8 @@
 export type Data = {
+
+	id: string;
 	img: string;
+	index: number;
 	consumption: number;
 	door: number;
 	make: string;
@@ -15,6 +18,5 @@ export type ExtendedData = Data & {
 	color: string;
 	drivetrain: string;
 	'fuel type': string;
-	id: string;
 	transmission: string;
 };

@@ -21,7 +21,7 @@ const HeroImg: React.FC = () => {
 						className={classes.heroFieldset}
 					>
 						<label htmlFor="location">Location</label>
-						<input name="location" />
+						<input id="location" />
 					</fieldset>
 					<fieldset
 						aria-label="Select vehicle class"
@@ -30,6 +30,10 @@ const HeroImg: React.FC = () => {
 						<label htmlFor="class">Vehicle class</label>
 						<select id="class">
 							<option value="Select class">Select class</option>
+							<option value="Select class">B Class</option>
+							<option value="Select class">C Class</option>
+							<option value="Select class">D Class</option>
+							<option value="Select class">SUV</option>
 						</select>
 					</fieldset>
 					<fieldset aria-label='Choose pickup and return date' className={classes.heroCalendarOptions}>

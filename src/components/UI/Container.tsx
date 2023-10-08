@@ -6,7 +6,11 @@ type Container = {
 };
 
 const Container: React.FC<Container> = (props) => {
-	return <div className={classes.container}>{props.children}</div>;
+	return (
+		<div className={classes.container}>
+			<div className={classes.wrapper}>{props.children}</div>
+		</div>
+	);
 };
 
 export default Container;

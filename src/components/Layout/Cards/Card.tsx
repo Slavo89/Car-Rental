@@ -1,20 +1,26 @@
+import React from 'react';
 import classes from './Card.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
 import { Data } from '../../../util/types';
+import { Link } from 'react-router-dom';
+// import { FocusEvent, FocusEventHandler } from 'react';
 
 const Card = (props: Data) => {
-	const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-		if (event.target === event.currentTarget) {
-			props.onFocus();
-		}
+	const handleFocus = (event: React.FocusEvent<HTMLAnchorElement>) => {
+	// const handleFocus = () => {
+		event.preventDefault();
+		props.onFocus();
+		// console.log(event);
 	};
 
 	return (
-		<div
-			tabIndex={0}
+		<Link
+			to={`/${props.id}`}
 			className={classes.card}
 			onFocus={handleFocus}
+			tabIndex={-1}
+			aria-label={`Slide ${props.index}`}
 		>
 			<img
 				src={props.img}
@@ -68,7 +74,7 @@ const Card = (props: Data) => {
 					</button>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

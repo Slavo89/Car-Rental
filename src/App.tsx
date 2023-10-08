@@ -1,8 +1,9 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-// import MainPage from './pages/MainPage';
-import CarDetailsPage from './pages/CarDetailsPage';
+import MainPage from './pages/MainPage';
+import CarDetailsPage, {
+} from './pages/CarDetailsPage'; 
 import Root from './pages/Root';
 
 const queryClient = new QueryClient();
@@ -10,14 +11,17 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <CarDetailsPage />,
+		element: <Root />,
+
 		children: [
 			{
 				index: true,
-				// element: < />,
-				// loader: gameListLoader,
+				element: <MainPage />,
 			},
-			// { path: ':vehicleId', element: < CarDetailsPage/> },
+			{
+				path: '/:id',
+				element: <CarDetailsPage />,
+			},
 		],
 	},
 ]);
