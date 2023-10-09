@@ -1,26 +1,17 @@
-import React from 'react';
 import classes from './Card.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
 import { Data } from '../../../util/types';
 import { Link } from 'react-router-dom';
-// import { FocusEvent, FocusEventHandler } from 'react';
 
 const Card = (props: Data) => {
-	const handleFocus = (event: React.FocusEvent<HTMLAnchorElement>) => {
-	// const handleFocus = () => {
-		event.preventDefault();
-		props.onFocus();
-		// console.log(event);
-	};
-
 	return (
 		<Link
 			to={`/${props.id}`}
 			className={classes.card}
-			onFocus={handleFocus}
-			tabIndex={-1}
-			aria-label={`Slide ${props.index}`}
+			tabIndex={props.disableFocus ? -1 : 0}
+			aria-hidden={props.disableFocus}
+			aria-label={`Slide ${props.index} of ${props.numberOfCars}`}
 		>
 			<img
 				src={props.img}
@@ -66,7 +57,9 @@ const Card = (props: Data) => {
 						<span>${props.price.toFixed(2)}</span>/ day
 					</p>
 					<button
+						tabIndex={props.disableFocus ? -1 : 0}
 						aria-label="Rent button"
+						// aria-hidden
 						className={classes.rentButton}
 						onFocus={(event) => event.preventDefault()}
 					>

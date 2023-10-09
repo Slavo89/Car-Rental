@@ -1,16 +1,30 @@
 .card {
+	position: relative;
 	all: unset;
 	width: min(100%, 700px);
 	background-color: var(--white-color);
 	overflow: hidden;
 	cursor: pointer;
-	transition: scale 0.3s;
+	transition: all 0.3s;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	flex: 0 0 auto;
-	&:focus-visible {
-		box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
+	z-index: 0;
+	&:focus-visible,
+	&:hover {
+		// box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
+		background-color: rgba(0, 0, 0, 0.1);
+		// &::after {
+		// 	content: 'Quick View';
+		// 	position: absolute;
+		// 	top: 50%;
+		// 	left: 50%;
+		// 	transform: translate(-50%, -50%);
+		// 	color: white;
+		// 	font-size: 1.2em;
+		// 	z-index: 1;
+		// }
 	}
 }
 .cardImage {
@@ -43,7 +57,8 @@
 	transition: all 0.3s;
 	&:focus-visible {
 		outline: none;
-		box-shadow: 0 5px 15px rgba(0, 0, 0, .6);
+		background-color: var(--black-color);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
 	}
 }
 .carYear,
@@ -76,10 +91,11 @@
 
 @media not (prefers-reduced-motion) {
 	.card:hover {
-		box-shadow:  0px 1px 4px rgba(0, 0, 0, 0.16); 
+		box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
 	}
 	.rentButton:hover {
-		scale: 1.05;
+		scale: 1.03;
+		background-color: var(--black-color);
 		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 	}
 }

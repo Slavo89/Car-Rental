@@ -31,34 +31,34 @@ const Carousel: React.FC<Props> = (props) => {
 		setCurrentIndex(currentIndex - 1);
 	};
 
-	// const handleFocus = (index: number) => {
-	// 	if (currentIndex === props.data.length - props.visibleCars) {
-	// 		return;
-	// 	}
-	// 	setCurrentIndex(index);
-	// };
-
 	const transformValue = `translate(-${currentIndex * props.slidePercentage}%)`; // transformValue for sliding Carousel
 
-	console.log(currentIndex);
+	const isSlideVisible = (
+		index: number,
+		currentIndex: number,
+		visibleCars: number
+	) => {
+		return index >= currentIndex && index < currentIndex + visibleCars;
+	};
+
 	return (
 		<>
 			<div className={classes.classHeadline}>
 				<h4 className={classes.classHeader}>{props.carClass}</h4>
 				<div className={classes.buttons}>
 					<button
-					aria-label='Slide to previous car'
+						aria-label="Slide to previous car"
 						className={classes.leftBtn}
 						onClick={slidePrev}
 					>
-						<BsChevronLeft aria-hidden/>
+						<BsChevronLeft aria-hidden />
 					</button>
 					<button
-					aria-label='Slide to next car'
+						aria-label="Slide to next car"
 						className={classes.rightBtn}
 						onClick={slideNext}
 					>
-						<BsChevronRight aria-hidden/>
+						<BsChevronRight aria-hidden />
 					</button>
 				</div>
 			</div>
@@ -73,10 +73,10 @@ const Carousel: React.FC<Props> = (props) => {
 				>
 					{props.data.map((vehicle: ExtendedData, index: number) => (
 						<Card
-							index={index + 1}
 							key={vehicle.id}
 							id={vehicle.id}
 							img={vehicle.img}
+							index={index + 1}
 							consumption={vehicle.consumption}
 							door={vehicle.door}
 							make={vehicle.make}
@@ -84,8 +84,10 @@ const Carousel: React.FC<Props> = (props) => {
 							price={vehicle.price}
 							passengers={vehicle.passengers}
 							year={vehicle.year}
-							// onFocus={handleFocus}
-							// onFocus={() => handleFocus(index)}
+							numberOfCars={props.data.length}
+							disableFocus={
+								!isSlideVisible(index, currentIndex, props.visibleCars)
+							}
 						/>
 					))}
 				</div>

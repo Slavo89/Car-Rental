@@ -1,8 +1,7 @@
 export type Data = {
-
 	id: string;
 	img: string;
-	index: number;
+	index?: number;
 	consumption: number;
 	door: number;
 	make: string;
@@ -10,7 +9,8 @@ export type Data = {
 	price: number;
 	passengers: number;
 	year: number;
-	onFocus: () => void;
+	disableFocus?: boolean;
+	numberOfCars?: number;
 };
 
 export type ExtendedData = Data & {
