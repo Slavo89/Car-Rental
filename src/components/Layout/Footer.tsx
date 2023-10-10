@@ -4,15 +4,10 @@ import {
 	BsYoutube,
 	BsFacebook,
 	BsInstagram,
-	BsChevronUp,
 } from 'react-icons/bs';
 
 const Footer: React.FC = () => {
-	const scrollToTopHandler = () => {
-		window.scrollTo({
-			top: 0,
-		});
-	};
+	
 	return (
 		<footer className={classes.footer}>
 			<div className={classes.contact}>
@@ -38,29 +33,19 @@ const Footer: React.FC = () => {
 					</div>
 					<div className={classes.social}>
 						<div className={classes.icon}>
-							<BsYoutube aria-label='Youtube'/>
+							<BsYoutube aria-label="Youtube" />
 						</div>
 						<div className={classes.icon}>
-							<BsFacebook aria-label='Facebook'/>
+							<BsFacebook aria-label="Facebook" />
 						</div>
 						<div className={classes.icon}>
-							<BsInstagram aria-label='Instagram'/>
+							<BsInstagram aria-label="Instagram" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className={classes.copyrights}>
 				<p>Copyright &#169; 2023 powered, Inc. All rights reserved</p>
-			</div>
-			<div className={classes.goTopContainer}>
-				<button
-					aria-label='Scroll to top button'
-					type="button"
-					className={classes.goTop}
-					onClick={scrollToTopHandler}
-				>
-					<BsChevronUp aria-hidden/>
-				</button>
 			</div>
 		</footer>
 	);

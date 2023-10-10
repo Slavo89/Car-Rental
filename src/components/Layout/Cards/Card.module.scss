@@ -1,6 +1,6 @@
 .card {
-	position: relative;
 	all: unset;
+	position: relative;
 	width: min(100%, 700px);
 	background-color: var(--white-color);
 	overflow: hidden;
@@ -11,21 +11,7 @@
 	justify-content: space-between;
 	flex: 0 0 auto;
 	z-index: 0;
-	&:focus-visible,
-	&:hover {
-		// box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
-		background-color: rgba(0, 0, 0, 0.1);
-		// &::after {
-		// 	content: 'Quick View';
-		// 	position: absolute;
-		// 	top: 50%;
-		// 	left: 50%;
-		// 	transform: translate(-50%, -50%);
-		// 	color: white;
-		// 	font-size: 1.2em;
-		// 	z-index: 1;
-		// }
-	}
+	scale: .97;
 }
 .cardImage {
 	display: flex;
@@ -53,7 +39,6 @@
 	border-radius: 3px;
 	color: var(--font-white);
 	cursor: pointer;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	transition: all 0.3s;
 	&:focus-visible {
 		outline: none;
@@ -91,10 +76,10 @@
 
 @media not (prefers-reduced-motion) {
 	.card:hover {
+		scale: .99;
 		box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
 	}
 	.rentButton:hover {
-		scale: 1.03;
 		background-color: var(--black-color);
 		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 	}

@@ -59,9 +59,8 @@ const Card = (props: Data) => {
 					<button
 						tabIndex={props.disableFocus ? -1 : 0}
 						aria-label="Rent button"
-						// aria-hidden
 						className={classes.rentButton}
-						onFocus={(event) => event.preventDefault()}
+						onClick={(event) => event.preventDefault()}
 					>
 						Rent Now
 					</button>

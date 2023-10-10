@@ -9,19 +9,17 @@
 }
 
 :root {
-	--black-color: #17171A;
+	--black-color: #17171a;
 	--grey-color: #f8f8f8;
 	--white-color: #fff;
-	--blue-color: #00215E;
+	--blue-color: #00215e;
 	--green-color: #008000;
 	--red-color: #d6230c;
 	--font-black: #000;
-	--font-white: #FFF;
-	--font-grey: #A2A2A3;
-	--border-color: #A2A2A3;
+	--font-white: #fff;
+	--font-grey: #a2a2a3;
+	--border-color: #a2a2a3;
 }
-
-
 
 html {
 	box-sizing: border-box;
@@ -38,9 +36,9 @@ body {
 	line-height: 1.5;
 	overflow-x: hidden;
 	&:focus-within {
-	outline: 1px solid white;
-	border-radius: 5px;
-}
+		outline: 1px solid white;
+		border-radius: 5px;
+	}
 }
 
 section {
@@ -49,4 +47,58 @@ section {
 
 h4 {
 	font-size: 2rem;
+}
+
+input[type='range'] {
+	appearance: none;
+	-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+	width: 100%; /* Specific width is required for Firefox. */
+	background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+}
+
+input[type='range']:focus {
+	outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type='range']::-ms-track {
+	width: 100%;
+	cursor: pointer;
+
+	/* Hides the slider so custom styles can be added */
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}
+
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 14px;
+	width: 14px;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
+}
+
+// /* All the same stuff for Firefox */
+input[type='range']::-moz-range-thumb {
+	height: 14px;
+	width: 14px;
+	border: none;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
+}
+
+// /* All the same stuff for IE */
+input[type='range']::-ms-thumb {
+	height: 14px;
+	width: 14px;
+	border: none;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
 }

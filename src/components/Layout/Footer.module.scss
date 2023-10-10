@@ -71,27 +71,6 @@
 	border-top: 1px solid var(--border-color);
 }
 
-.goTopContainer {
-	position: absolute;
-	top: 15px;
-	right: 50%;
-	transform: translateX(50%);
-}
-.goTop {
-	padding-bottom: 0.3rem;
-	display: flex;
-	width: 50px;
-	height: 50px;
-	justify-content: center;
-	align-items: center;
-	font-size: 3rem;
-	background-color: inherit;
-	color: var(--font-white);
-	border: 1px solid var(--font-white);
-	border-radius: 50%;
-	cursor: pointer;
-}
-
 @media (width>= 770px) {
 	.contact {
 		flex-direction: row;
@@ -105,27 +84,5 @@
 	}
 	.column {
 		text-align: left;
-	}
-	.goTopContainer {
-		right: 7%;
-		transform: translateX(0);
-	}
-}
-
-@media not (prefers-reduced-motion) {
-	.goTop {
-		animation: pulse 1s infinite;
-	}
-}
-
-@keyframes pulse {
-	0% {
-		scale: 1;
-	}
-	50% {
-		scale: 1.1;
-	}
-	100% {
-		scale: 1;
 	}
 }

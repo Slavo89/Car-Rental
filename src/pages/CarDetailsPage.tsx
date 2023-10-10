@@ -177,35 +177,39 @@ const CarDetailsPage = () => {
 						<div className={classes.options}>
 							<h4>Additional Options:</h4>
 							<form className={classes.form}>
-								<label>
+								<label htmlFor="child-seat">
 									<input
 										type="checkbox"
-										data-calculate="3"
+										id="child-seat"
 										name="seat"
-									/>
+										data-calculate="3"
+										/>
 									<span>Child seat: $3 /day</span>
 								</label>
-								<label>
+								<label htmlFor="baby-chair">
 									<input
 										type="checkbox"
-										data-calculate="3"
+										id="baby-chair"
 										name="chair"
+										data-calculate="3"
 									/>
 									<span>Baby chair: $3 /day</span>
 								</label>
-								<label>
+								<label htmlFor="gps">
 									<input
 										type="checkbox"
-										data-calculate="2"
+										id="gps"
 										name="gps"
+										data-calculate="2"
 									/>
 									<span>GPS: $2 /day</span>
 								</label>
-								<label>
+								<label htmlFor="roof-rack">
 									<input
 										type="checkbox"
-										data-calculate="5"
+										id='roof-rack'
 										name="rack"
+										data-calculate="5"
 									/>
 									<span>Roof rack: $5 /day</span>
 								</label>

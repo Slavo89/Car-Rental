@@ -1,17 +1,17 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import classes from './HeroImg.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const HeroImg: React.FC = () => {
-	const onSubmitHandler = (event: FormEvent<HTMLButtonElement>) => {
-		event.preventDefault();
+	const navigate = useNavigate();
+	const onSubmitHandler = () => {
+		navigate('/search');
+		// event.preventDefault();
 	};
 
 	return (
 		<header className={classes.heroHeader}>
 			<div className={classes.heroContent}>
-				{/* <div className={classes.heroLogo}>
-					<a href="/"></a>
-				</div> */}
 				<h1>
 					Find & Book <br /> a Great Deal Today
 				</h1>
@@ -36,7 +36,10 @@ const HeroImg: React.FC = () => {
 							<option value="Select class">SUV</option>
 						</select>
 					</fieldset>
-					<fieldset aria-label='Choose pickup and return date' className={classes.heroCalendarOptions}>
+					<fieldset
+						aria-label="Choose pickup and return date"
+						className={classes.heroCalendarOptions}
+					>
 						<label>
 							Pick up
 							<input
@@ -54,9 +57,9 @@ const HeroImg: React.FC = () => {
 					</fieldset>
 					<button
 						aria-label="Search car button"
-						type="submit"
+						// type="submit"
 						className={classes.searchBtn}
-						onSubmit={onSubmitHandler}
+						onClick={onSubmitHandler}
 					>
 						Search
 					</button>

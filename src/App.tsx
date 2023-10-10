@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import CarDetailsPage, {
 } from './pages/CarDetailsPage'; 
 import Root from './pages/Root';
+import SearchPage from './pages/SearchPage';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
 			{
 				path: '/:id',
 				element: <CarDetailsPage />,
+			},
+			{
+				path: '/search',
+				element: <SearchPage/>
 			},
 		],
 	},
