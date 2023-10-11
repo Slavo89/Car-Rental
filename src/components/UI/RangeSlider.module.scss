@@ -1,0 +1,96 @@
+input[type='range'] {
+	appearance: none;
+	-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+	width: 100%; /* Specific width is required for Firefox. */
+	background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+	height: 3.5px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+}
+
+input[type='range']:focus {
+	outline: none; /* Removes the blue border */
+}
+
+input[type='range']::-ms-track {
+	appearance: none;
+	height: 3.5px;
+	width: 100%;
+	cursor: pointer;
+
+	/* Hides the slider so custom styles can be added */
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}
+
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 14px;
+	width: 14px;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+// /* All the same stuff for Firefox */
+input[type='range']::-moz-range-thumb {
+	appearance: none;
+	-webkit-appearance: none;
+	height: 14px;
+	width: 14px;
+	border: none;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+// /* All the same stuff for IE */
+input[type='range']::-ms-thumb {
+	appearance: none;
+	height: 14px;
+	width: 14px;
+	border: none;
+	border-radius: 25px;
+	background: var(--blue-color);
+	cursor: pointer;
+	pointer-events: auto;
+	position: relative;
+}
+
+.rangeSlider {
+	position: relative;
+}
+
+.sliderTrack {
+	position: absolute;
+	width: 100%;
+	height: 3.5px;
+	background: linear-gradient(
+		to right,
+		var(--border-color) 0%,
+		var(--border-color) calc(var(--minPercentage)),
+		var(--blue-color) calc(var(--minPercentage)),
+		var(--blue-color) calc(var(--maxPercentage)),
+		var(--border-color) calc(var(--maxPercentage)),
+		var(--border-color) 100%
+	);
+	opacity: 0.9;
+}
+
+.rangeInput {
+	position: absolute;
+	margin-top: -5px;
+	z-index: 5;
+}
+
+.rangeValues {
+	margin-top: 1.75rem;
+}

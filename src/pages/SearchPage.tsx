@@ -3,6 +3,8 @@ import classes from './SearchPage.module.scss';
 import Container from '../components/UI/Container';
 import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
+import RangeSlider from '../components/UI/RangeSlider';
+
 
 const SearchPage: React.FC = () => {
 	return (
@@ -147,38 +149,20 @@ const SearchPage: React.FC = () => {
 
 							<div className={classes.row}>
 								<h4>Price</h4>
-								<label
-									htmlFor="price-range"
-									className={classes.rangeLabel}
-								>
-									<input
-										type="range"
-										id="price-range"
-										name="price"
-										min="20"
-										max="45"
-										className={classes.rangeInput}
-									/>
-								</label>
-								<div className={classes.rangeValues}>$0 - $150</div>
+								<RangeSlider
+									title="price"
+									minValue={20}
+									maxValue={45}
+								/>
 							</div>
 
 							<div className={classes.row}>
 								<h4>Year</h4>
-								<label
-									htmlFor="year"
-									className={classes.rangeLabel}
-								>
-									<input
-										type="range"
-										id="year"
-										name="year"
-										min="2016"
-										max="2023"
-										className={classes.rangeInput}
-									/>
-								</label>
-								<div className={classes.rangeValues}>2016 - 2023</div>
+								<RangeSlider
+									title="year"
+									minValue={2016}
+									maxValue={2023}
+								/>
 							</div>
 						</div>
 					</section>
@@ -190,3 +174,134 @@ const SearchPage: React.FC = () => {
 };
 
 export default SearchPage;
+
+// interface CustomStyles {
+// 	'--minPricePercentage': string;
+// 	'--maxPricePercentage': string;
+// }
+
+
+// const [yearMinValue, setYearMinValue] = useState(2016);
+// const [yearMaxValue, setYearMaxValue] = useState(2023);
+
+// const calculatePercentage = (
+// 	minValue: number,
+// 	maxValue: number,
+// 	minLimit: number,
+// 	maxLimit: number
+// ) => {
+// 	return {
+// 		'--minPercentage':
+// 			((minValue - minLimit) / (maxLimit - minLimit)) * 100 + '%',
+// 		'--maxPercentage':
+// 			((maxValue - minLimit) / (maxLimit - minLimit)) * 100 + '%',
+// 	};
+// };
+
+// const priceStyles: Record<string, string> = calculatePercentage(
+// 	priceMinValue,
+// 	priceMaxValue,
+// 	20,
+// 	45
+// );
+// const yearStyles: Record<string, string> = calculatePercentage(
+// 	yearMinValue,
+// 	yearMaxValue,
+// 	2016,
+// 	2023
+// );
+
+// const handlePriceMinChange = (event) => {
+// 	const value = Math.min(+event.target.value, priceMaxValue);
+// 	if (priceMinValue < 20) {
+// 		setPriceMinValue(20);
+// 	}
+// 	setPriceMinValue(value);
+// 	event.target.value = value.toString();
+// };
+
+// const handlePriceMaxChange = (event) => {
+// 	const value = Math.max(+event.target.value, priceMinValue);
+// 	if (priceMaxValue > 45) {
+// 		setPriceMaxValue(45);
+// 	}
+// 	setPriceMaxValue(value);
+// 	event.target.value = value.toString();
+// };
+
+{
+	/* <label
+									htmlFor="price-range"
+									className={classes.rangeLabel}
+								>
+									<div
+										className={classes.sliderTrack}
+										style={priceStyles}
+									></div>
+									<input
+										type="range"
+										id="price-range"
+										name="price"
+										min="20"
+										max="45"
+										value={priceMinValue}
+										className={classes.rangeInput}
+										onChange={handlePriceMinChange}
+									/>
+									<input
+										type="range"
+										id="price-range"
+										name="price"
+										min="20"
+										max="45"
+										value={priceMaxValue}
+										className={classes.rangeInput}
+										onChange={handlePriceMaxChange}
+									/>
+								</label>
+								<div className={classes.rangeValues}>
+									$ {priceMinValue} - $ {priceMaxValue}
+								</div> */
+}
+
+{
+	/* <label
+									htmlFor="year"
+									className={classes.rangeLabel}
+								>
+									<div
+										className={classes.sliderTrack}
+										// className={classes.yearSliderTrack}
+										style={yearStyles}
+									></div>
+									<input
+										type="range"
+										id="year"
+										name="year"
+										min="2016"
+										max="2023"
+										value={yearMinValue}
+										className={classes.rangeInput}
+										onChange={(e) =>
+											setYearMinValue(parseInt(e.target.value, 10))
+										}
+									/>
+									<input
+										type="range"
+										id="year"
+										name="year"
+										min="2016"
+										max="2023"
+										value={yearMaxValue}
+										className={classes.rangeInput}
+										onChange={(e) =>
+											setYearMaxValue(parseInt(e.target.value, 10))
+										}
+									/>
+								</label> */
+}
+{
+	/* <div className={classes.rangeValues}>
+									{yearMinValue} - {yearMaxValue}
+								</div> */
+}
