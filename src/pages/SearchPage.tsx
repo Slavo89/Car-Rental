@@ -5,7 +5,6 @@ import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../components/UI/RangeSlider';
 
-
 const SearchPage: React.FC = () => {
 	return (
 		<main>
@@ -32,17 +31,17 @@ const SearchPage: React.FC = () => {
 								aria-label="Choose pickup and return date"
 								className={classes.calendarOptions}
 							>
-								<label>
+								<label htmlFor="pick-up-date">
 									Pick up
 									<input
-										id="dateInput"
+										id="return-date"
 										type="date"
 									/>
 								</label>
-								<label>
+								<label htmlFor="return-date">
 									Return
 									<input
-										id="dateInput"
+										id="return-date"
 										type="date"
 									/>
 								</label>
@@ -62,6 +61,7 @@ const SearchPage: React.FC = () => {
 										type="checkbox"
 										name="fuel-type"
 										value="Gasoline"
+										
 									/>
 									Gasoline
 								</label>
@@ -179,7 +179,6 @@ export default SearchPage;
 // 	'--minPricePercentage': string;
 // 	'--maxPricePercentage': string;
 // }
-
 
 // const [yearMinValue, setYearMinValue] = useState(2016);
 // const [yearMaxValue, setYearMaxValue] = useState(2023);

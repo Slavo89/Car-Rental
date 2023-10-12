@@ -1,8 +1,10 @@
 input[type='range'] {
+	// padding: 0 2px;
 	appearance: none;
 	-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
 	width: 100%; /* Specific width is required for Firefox. */
 	background: transparent; /* Otherwise white in Chrome */
+	pointer-events: none;
 }
 
 input[type='range']::-webkit-slider-runnable-track {
@@ -22,6 +24,7 @@ input[type='range']::-ms-track {
 	height: 3.5px;
 	width: 100%;
 	cursor: pointer;
+	// overflow: hidden;
 
 	/* Hides the slider so custom styles can be added */
 	background: transparent;
@@ -31,6 +34,7 @@ input[type='range']::-ms-track {
 
 input[type='range']::-webkit-slider-thumb {
 	-webkit-appearance: none;
+	margin-top: -5px;
 	height: 14px;
 	width: 14px;
 	border-radius: 25px;
@@ -43,6 +47,7 @@ input[type='range']::-webkit-slider-thumb {
 input[type='range']::-moz-range-thumb {
 	appearance: none;
 	-webkit-appearance: none;
+	// padding: 0.2rem;
 	height: 14px;
 	width: 14px;
 	border: none;
@@ -50,11 +55,13 @@ input[type='range']::-moz-range-thumb {
 	background: var(--blue-color);
 	cursor: pointer;
 	pointer-events: auto;
+	z-index: 5;
 }
 
 // /* All the same stuff for IE */
 input[type='range']::-ms-thumb {
 	appearance: none;
+	margin-top: -5px;
 	height: 14px;
 	width: 14px;
 	border: none;
@@ -83,12 +90,25 @@ input[type='range']::-ms-thumb {
 		var(--border-color) 100%
 	);
 	opacity: 0.9;
+	z-index: -1;
 }
 
 .rangeInput {
 	position: absolute;
-	margin-top: -5px;
-	z-index: 5;
+	z-index: 10;
+}
+
+@-moz-document url-prefix() {
+	/* Specyficzne style dla Firefoxa */
+	.rangeInput {
+		margin-top: -6px;
+	}
+	// .input2 {
+	// 	z-index: 2;
+	// }
+	// .input1{
+	// 	z-index: 2.1;
+	// }
 }
 
 .rangeValues {
