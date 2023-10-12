@@ -1,22 +1,44 @@
 import React from 'react';
 import classes from './SearchPage.module.scss';
 import Container from '../components/UI/Container';
-import { FaFilter } from 'react-icons/fa6';
-import { BsArrowLeftShort } from 'react-icons/bs';
-import RangeSlider from '../components/UI/RangeSlider';
+import SearchFilters from '../components/Layout/SearchFilters';
+import SearchPageCard from '../components/Layout/Cards/SearchPageCard';
+
+const vehicle = {
+	id: 'v1',
+	consumption: 6.5,
+	door: 5,
+	'fuel type': 'Gasoline',
+	img: 'https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_low/v1/editorial/vhs/Renault-Megane.png',
+	make: 'Renault',
+	model: 'Megane',
+	passengers: 5,
+	price: 28,
+	year: 2016,
+};
 
 const SearchPage: React.FC = () => {
 	return (
 		<main>
 			<Container>
 				<div className={classes.searchPage}>
-					<button className={classes.showFiltersBtn}>
+					{/* <button
+						className={classes.showFiltersBtn}
+						onClick={showFiltersHandler}
+					>
 						<FaFilter /> Filters
 					</button>
-					<section className={classes.filtersSection}>
-						<button className={classes.closeFiltersBtn}>
+					<section
+						className={`${classes.filtersSection} ${
+							showFilters && classes.show
+						} `}
+					>
+						<button
+							className={classes.closeFiltersBtn}
+							onClick={showFiltersHandler}
+						>
 							<BsArrowLeftShort aria-hidden />
-							Back
+							Hide
 						</button>
 						<form className={classes.form}>
 							<h2>Quick Search</h2>
@@ -34,7 +56,7 @@ const SearchPage: React.FC = () => {
 								<label htmlFor="pick-up-date">
 									Pick up
 									<input
-										id="return-date"
+										id="pick-up-date"
 										type="date"
 									/>
 								</label>
@@ -61,7 +83,6 @@ const SearchPage: React.FC = () => {
 										type="checkbox"
 										name="fuel-type"
 										value="Gasoline"
-										
 									/>
 									Gasoline
 								</label>
@@ -165,8 +186,59 @@ const SearchPage: React.FC = () => {
 								/>
 							</div>
 						</div>
+					</section> */}
+					<SearchFilters />
+					<section className={classes.searchResults}>
+						<h2>Search Results</h2>
+						<div className={classes.categories}>
+							<div className={classes.categoryBox}>
+								<img
+									src="/public/SearchImages/B Class.webp"
+									alt="B class"
+									loading="lazy"
+								/>
+								<span>B Class</span>
+							</div>
+							<div className={classes.categoryBox}>
+								<img
+									src="/public/SearchImages/C Class.webp"
+									alt="C class"
+									loading="lazy"
+								/>
+								<span>C Class</span>
+							</div>
+							<div className={classes.categoryBox}>
+								<img
+									src="/public/SearchImages/D Class.webp"
+									alt="D class"
+									loading="lazy"
+								/>
+								<span>D Class</span>
+							</div>
+							<div className={classes.categoryBox}>
+								<img
+									src="/public/SearchImages/SUV.webp"
+									alt="SUV"
+									loading="lazy"
+								/>
+								<span>SUV</span>
+							</div>
+						</div>
+						<div className={classes.results}>
+							<SearchPageCard
+								key={vehicle.id}
+								id={vehicle.id}
+								img={vehicle.img}
+								consumption={vehicle.consumption}
+								door={vehicle.door}
+								make={vehicle.make}
+								model={vehicle.model}
+								price={vehicle.price}
+								passengers={vehicle.passengers}
+								year={vehicle.year}
+							/>
+						</div>
 					</section>
-					<div>Car List</div>
 				</div>
 			</Container>
 		</main>
@@ -174,133 +246,3 @@ const SearchPage: React.FC = () => {
 };
 
 export default SearchPage;
-
-// interface CustomStyles {
-// 	'--minPricePercentage': string;
-// 	'--maxPricePercentage': string;
-// }
-
-// const [yearMinValue, setYearMinValue] = useState(2016);
-// const [yearMaxValue, setYearMaxValue] = useState(2023);
-
-// const calculatePercentage = (
-// 	minValue: number,
-// 	maxValue: number,
-// 	minLimit: number,
-// 	maxLimit: number
-// ) => {
-// 	return {
-// 		'--minPercentage':
-// 			((minValue - minLimit) / (maxLimit - minLimit)) * 100 + '%',
-// 		'--maxPercentage':
-// 			((maxValue - minLimit) / (maxLimit - minLimit)) * 100 + '%',
-// 	};
-// };
-
-// const priceStyles: Record<string, string> = calculatePercentage(
-// 	priceMinValue,
-// 	priceMaxValue,
-// 	20,
-// 	45
-// );
-// const yearStyles: Record<string, string> = calculatePercentage(
-// 	yearMinValue,
-// 	yearMaxValue,
-// 	2016,
-// 	2023
-// );
-
-// const handlePriceMinChange = (event) => {
-// 	const value = Math.min(+event.target.value, priceMaxValue);
-// 	if (priceMinValue < 20) {
-// 		setPriceMinValue(20);
-// 	}
-// 	setPriceMinValue(value);
-// 	event.target.value = value.toString();
-// };
-
-// const handlePriceMaxChange = (event) => {
-// 	const value = Math.max(+event.target.value, priceMinValue);
-// 	if (priceMaxValue > 45) {
-// 		setPriceMaxValue(45);
-// 	}
-// 	setPriceMaxValue(value);
-// 	event.target.value = value.toString();
-// };
-
-{
-	/* <label
-									htmlFor="price-range"
-									className={classes.rangeLabel}
-								>
-									<div
-										className={classes.sliderTrack}
-										style={priceStyles}
-									></div>
-									<input
-										type="range"
-										id="price-range"
-										name="price"
-										min="20"
-										max="45"
-										value={priceMinValue}
-										className={classes.rangeInput}
-										onChange={handlePriceMinChange}
-									/>
-									<input
-										type="range"
-										id="price-range"
-										name="price"
-										min="20"
-										max="45"
-										value={priceMaxValue}
-										className={classes.rangeInput}
-										onChange={handlePriceMaxChange}
-									/>
-								</label>
-								<div className={classes.rangeValues}>
-									$ {priceMinValue} - $ {priceMaxValue}
-								</div> */
-}
-
-{
-	/* <label
-									htmlFor="year"
-									className={classes.rangeLabel}
-								>
-									<div
-										className={classes.sliderTrack}
-										// className={classes.yearSliderTrack}
-										style={yearStyles}
-									></div>
-									<input
-										type="range"
-										id="year"
-										name="year"
-										min="2016"
-										max="2023"
-										value={yearMinValue}
-										className={classes.rangeInput}
-										onChange={(e) =>
-											setYearMinValue(parseInt(e.target.value, 10))
-										}
-									/>
-									<input
-										type="range"
-										id="year"
-										name="year"
-										min="2016"
-										max="2023"
-										value={yearMaxValue}
-										className={classes.rangeInput}
-										onChange={(e) =>
-											setYearMaxValue(parseInt(e.target.value, 10))
-										}
-									/>
-								</label> */
-}
-{
-	/* <div className={classes.rangeValues}>
-									{yearMinValue} - {yearMaxValue}
-								</div> */
-}

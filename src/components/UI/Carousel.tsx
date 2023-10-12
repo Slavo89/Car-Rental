@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classes from './Carousel.module.scss';
-import Card from '../Layout/Cards/Card';
+import MainPageCard from '../Layout/Cards/MainPageCard';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 import { ExtendedData } from '../../util/types';
@@ -72,7 +72,7 @@ const Carousel: React.FC<Props> = (props) => {
 					role="group"
 				>
 					{props.data.map((vehicle: ExtendedData, index: number) => (
-						<Card
+						<MainPageCard
 							key={vehicle.id}
 							id={vehicle.id}
 							img={vehicle.img}

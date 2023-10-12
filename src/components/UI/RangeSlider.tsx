@@ -60,7 +60,7 @@ const RangeSlider = (props: Props) => {
 				></div>
 				<input
 					type="range"
-					id={`${props.title}-range-min`}
+					id={`${props.title}-range`}
 					name={props.title}
 					min={props.minValue}
 					max={props.maxValue}
@@ -70,7 +70,7 @@ const RangeSlider = (props: Props) => {
 				/>
 				<input
 					type="range"
-					id={`${props.title}-range-max`}
+					id={`${props.title}-range`}
 					name={props.title}
 					min={props.minValue}
 					max={props.maxValue}

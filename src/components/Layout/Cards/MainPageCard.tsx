@@ -1,10 +1,10 @@
-import classes from './Card.module.scss';
+import classes from './MainPageCard.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
 import { Data } from '../../../util/types';
 import { Link } from 'react-router-dom';
 
-const Card = (props: Data) => {
+const MainPageCard = (props: Data) => {
 	return (
 		<Link
 			to={`/${props.id}`}
@@ -59,7 +59,7 @@ const Card = (props: Data) => {
 					<button
 						tabIndex={props.disableFocus ? -1 : 0}
 						aria-label="Rent button"
-						className={classes.rentButton}
+						className={classes.rentBtn}
 						onClick={(event) => event.preventDefault()}
 					>
 						Rent Now
@@ -70,4 +70,4 @@ const Card = (props: Data) => {
 	);
 };
 
-export default Card;
+export default MainPageCard;
