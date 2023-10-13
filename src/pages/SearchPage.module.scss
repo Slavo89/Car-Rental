@@ -22,21 +22,12 @@
 	flex-direction: column;
 	background-color: var(--white-color);
 	cursor: pointer;
+	outline: none;
 	span {
 		font-size: 1.2rem;
 		text-align: center;
 	}
-}
-
-.results {
-	display: flex;
-	flex-direction: column;
-}
-
-// MEDIA QUERIES
-
-@media not (prefers-reduced-motion) {
-	.categoryBox::after {
+	&::after {
 		content: '';
 		position: absolute;
 		left: 0;
@@ -46,10 +37,25 @@
 		background-color: var(--green-color);
 		transform: scaleX(0);
 		transform-origin: bottom;
-		transition: transform 0.3s ease-in-out;
+		// transition: transform 0.3s ease-in-out;
 	}
-	.categoryBox:hover::after {
+	&:hover::after,
+	&:focus-visible::after {
 		transform: scale(1);
+	}
+}
+
+.results {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+// MEDIA QUERIES
+
+@media not (prefers-reduced-motion) {
+	.categoryBox::after {
+		transition: transform 0.3s ease-in-out;
 	}
 }
 

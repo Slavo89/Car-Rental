@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import MainPage from './pages/MainPage';
-import CarDetailsPage, {
-} from './pages/CarDetailsPage'; 
+import CarDetailsPage from './pages/CarDetailsPage';
 import Root from './pages/Root';
-import SearchPage from './pages/SearchPage';
+import SearchPage, { loader as searchPageLoader } from './pages/SearchPage';
+import { queryClient } from './util/http';
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
 	{
@@ -25,7 +25,8 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/search',
-				element: <SearchPage/>
+				element: <SearchPage />,
+				loader: searchPageLoader,
 			},
 		],
 	},

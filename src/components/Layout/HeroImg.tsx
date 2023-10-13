@@ -55,15 +55,15 @@ const HeroImg: React.FC = () => {
 							/>
 						</label>
 					</fieldset>
-					<button
-						aria-label="Search car button"
-						// type="submit"
-						className={classes.searchBtn}
-						onClick={onSubmitHandler}
-					>
-						Search
-					</button>
 				</form>
+				<button
+					aria-label="Search car button"
+					// type="submit"
+					className={classes.searchBtn}
+					onClick={onSubmitHandler}
+				>
+					Search
+				</button>
 			</div>
 		</header>
 	);

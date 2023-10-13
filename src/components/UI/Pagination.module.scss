@@ -1,0 +1,25 @@
+.pagination {
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.page {
+    padding: 1.2rem 1.7rem;
+    color: var(--font-grey);
+    cursor: pointer;
+    transition: all .3s;
+    &.active {
+        background-color: var(--blue-color);
+        color: var(--font-white);
+    }
+}
+
+@media not (prefers-reduced-motion) {
+.page:hover {
+    background-color: var(--blue-color);
+    color: white;
+}
+}

@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './SearchPage.module.scss';
 import Container from '../components/UI/Container';
 import SearchFilters from '../components/Layout/SearchFilters';
 import SearchPageCard from '../components/Layout/Cards/SearchPageCard';
+import { fetchVehicles, queryClient } from '../util/http';
+import { useLoaderData } from 'react-router-dom';
+import Pagination from '../components/UI/Pagination';
+import { VehicleData } from '../util/types';
+import GoTopButton from '../components/UI/GoTopButton';
 
-const vehicle = {
-	id: 'v1',
-	consumption: 6.5,
-	door: 5,
-	'fuel type': 'Gasoline',
-	img: 'https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_low/v1/editorial/vhs/Renault-Megane.png',
-	make: 'Renault',
-	model: 'Megane',
-	passengers: 5,
-	price: 28,
-	year: 2016,
-};
+const CARS_PER_PAGE = 6;
 
 const SearchPage: React.FC = () => {
+	const DATA = useLoaderData() as VehicleData;
+	const VEHICLES = Object.keys(DATA).map((vehicleId) => ({
+		id: vehicleId,
+		...DATA[vehicleId],
+	}));
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const indexOfLastItem = currentPage * CARS_PER_PAGE;
+	const indexOfFirstItem = indexOfLastItem - CARS_PER_PAGE;
+	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+	const currentItems = VEHICLES.slice(indexOfFirstItem, indexOfLastItem);
 	return (
 		<main>
 			<Container>
@@ -191,7 +197,7 @@ const SearchPage: React.FC = () => {
 					<section className={classes.searchResults}>
 						<h2>Search Results</h2>
 						<div className={classes.categories}>
-							<div className={classes.categoryBox}>
+							<div tabIndex={0} className={classes.categoryBox}>
 								<img
 									src="/public/SearchImages/B Class.webp"
 									alt="B class"
@@ -199,7 +205,7 @@ const SearchPage: React.FC = () => {
 								/>
 								<span>B Class</span>
 							</div>
-							<div className={classes.categoryBox}>
+							<div tabIndex={0} className={classes.categoryBox}>
 								<img
 									src="/public/SearchImages/C Class.webp"
 									alt="C class"
@@ -207,7 +213,7 @@ const SearchPage: React.FC = () => {
 								/>
 								<span>C Class</span>
 							</div>
-							<div className={classes.categoryBox}>
+							<div tabIndex={0} className={classes.categoryBox}>
 								<img
 									src="/public/SearchImages/D Class.webp"
 									alt="D class"
@@ -215,7 +221,7 @@ const SearchPage: React.FC = () => {
 								/>
 								<span>D Class</span>
 							</div>
-							<div className={classes.categoryBox}>
+							<div tabIndex={0} className={classes.categoryBox}>
 								<img
 									src="/public/SearchImages/SUV.webp"
 									alt="SUV"
@@ -225,24 +231,41 @@ const SearchPage: React.FC = () => {
 							</div>
 						</div>
 						<div className={classes.results}>
-							<SearchPageCard
-								key={vehicle.id}
-								id={vehicle.id}
-								img={vehicle.img}
-								consumption={vehicle.consumption}
-								door={vehicle.door}
-								make={vehicle.make}
-								model={vehicle.model}
-								price={vehicle.price}
-								passengers={vehicle.passengers}
-								year={vehicle.year}
-							/>
+							{currentItems.map((vehicle) => (
+								<SearchPageCard
+									key={vehicle.id}
+									id={vehicle.id}
+									img={vehicle.img}
+									consumption={vehicle.consumption}
+									door={vehicle.door}
+									make={vehicle.make}
+									model={vehicle.model}
+									price={vehicle.price}
+									passengers={vehicle.passengers}
+									year={vehicle.year}
+								/>
+							))}
 						</div>
+						<Pagination
+							itemsPerPage={CARS_PER_PAGE}
+							totalItems={VEHICLES.length}
+							currentPage={currentPage}
+							paginate={paginate}
+						/>
 					</section>
 				</div>
 			</Container>
+			<GoTopButton />
 		</main>
 	);
 };
 
 export default SearchPage;
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function loader() {
+	return queryClient.fetchQuery({
+		queryKey: ['vehicles'],
+		queryFn: fetchVehicles,
+	});
+}

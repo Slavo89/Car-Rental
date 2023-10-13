@@ -20,3 +20,28 @@ export type ExtendedData = Data & {
 	'fuel type': string;
 	transmission: string;
 };
+
+export type PaginationProps = {
+	totalItems: number;
+	itemsPerPage: number;
+	currentPage: number;
+	paginate: (pageNumber: number) => void;
+};
+
+export type VehicleData = {
+	[key: string]: {
+		class: string;
+		color: string;
+		consumption: number;
+		door: number;
+		drivetrain: string;
+		fuelType: string;
+		img: string;
+		make: string;
+		model: string;
+		passengers: number;
+		price: number;
+		transmission: string;
+		year: number;
+	};
+};
