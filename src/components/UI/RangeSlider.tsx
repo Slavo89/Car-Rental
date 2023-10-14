@@ -60,6 +60,7 @@ const RangeSlider = (props: Props) => {
 				></div>
 				<input
 					type="range"
+					aria-label={`${props.title} minimum range`}
 					id={`${props.title}-range`}
 					name={props.title}
 					min={props.minValue}
@@ -67,9 +68,11 @@ const RangeSlider = (props: Props) => {
 					value={minValue}
 					className={`${classes.rangeInput} ${classes.input1}`}
 					onChange={handlePriceMinChange}
+					aria-valuetext={`${minValue}`}
 				/>
 				<input
 					type="range"
+					aria-label={`${props.title} maximum range`}
 					id={`${props.title}-range`}
 					name={props.title}
 					min={props.minValue}
@@ -77,9 +80,10 @@ const RangeSlider = (props: Props) => {
 					value={maxValue}
 					className={`${classes.rangeInput} ${classes.input2}`}
 					onChange={handlePriceMaxChange}
+					aria-valuetext={`${maxValue}`}
 				/>
 			</label>
-			<div className={classes.rangeValues}>
+			<div className={classes.rangeValues} >
 				{props.title === 'price' && '$'} {minValue} -{' '}
 				{props.title === 'price' && '$'} {maxValue}
 			</div>

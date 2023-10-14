@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Pagination.module.scss';
 import { PaginationProps } from '../../util/types';
 
 const Pagination: React.FC<PaginationProps> = (props) => {
-	const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
+	const [totalPages, setTotalPages] = useState(
+		Math.ceil(props.totalItems / props.itemsPerPage)
+	);
 	const pageNumbers = Array.from(
 		{ length: totalPages },
 		(_, index) => index + 1
 	);
+
+	useEffect(() => {
+		// Update page numbers when totalItems is changed
+		setTotalPages(Math.ceil(props.totalItems / props.itemsPerPage));
+	}, [props.totalItems, props.itemsPerPage]);
 
 	return (
 		<ul className={classes.pagination}>

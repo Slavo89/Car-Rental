@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './SearchPage.module.scss';
 import Container from '../components/UI/Container';
 import SearchFilters from '../components/Layout/SearchFilters';
@@ -17,218 +17,105 @@ const SearchPage: React.FC = () => {
 		id: vehicleId,
 		...DATA[vehicleId],
 	}));
+	const [currentItems, setCurrentItems] = useState(VEHICLES);
+
+
+	// PAGINATION HANDLER
 	const [currentPage, setCurrentPage] = useState(1);
+	const [totalItems, setTotalItems] = useState(VEHICLES.length);
 
-	const indexOfLastItem = currentPage * CARS_PER_PAGE;
-	const indexOfFirstItem = indexOfLastItem - CARS_PER_PAGE;
-	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+	const paginationHandler = (pageNumber: number) => setCurrentPage(pageNumber);
 
-	const currentItems = VEHICLES.slice(indexOfFirstItem, indexOfLastItem);
+	// CLASS FILTERING
+	const categoryBoxes = [
+		{
+			imageSrc: '/public/SearchImages/B Class.webp',
+
+			class: 'B',
+		},
+		{
+			imageSrc: '/public/SearchImages/C Class.webp',
+
+			class: 'C',
+		},
+		{
+			imageSrc: '/public/SearchImages/D Class.webp',
+
+			class: 'D',
+		},
+		{ imageSrc: '/public/SearchImages/SUV.webp', alt: 'SUV', class: 'SUV' },
+	];
+
+	const [activeClasses, setActiveClasses] = useState<string[]>([]);
+
+	const handleCategoryClick = (categoryClass: string) => {
+		// check if class is already active
+		const isClassActive = activeClasses.includes(categoryClass);
+
+		if (isClassActive) {
+			// delete if is active
+			setActiveClasses(activeClasses.filter((c) => c !== categoryClass));
+		} else {
+			// add if is not
+			setActiveClasses([...activeClasses, categoryClass]);
+		}
+
+		// Reset to first page
+		setCurrentPage(1);
+	};
+
+	useEffect(() => {
+		let filteredVehicles;
+
+		// Check if active classes
+		if (activeClasses.length === 0) {
+			// If is not display all vehicles
+			filteredVehicles = VEHICLES;
+		} else {
+			// Set currentItems after change of activeClasses
+			filteredVehicles = VEHICLES.filter((vehicle) => {
+				const vehicleClass = vehicle.class;
+				return activeClasses.some((activeClass) =>
+					vehicleClass.startsWith(activeClass)
+				);
+			});
+		}
+
+		// Calculate the first and last element indexes for the current page
+		const indexOfLastItem = currentPage * CARS_PER_PAGE;
+		const indexOfFirstItem = indexOfLastItem - CARS_PER_PAGE;
+
+		// Set current elements to filtered
+		setCurrentItems(filteredVehicles.slice(indexOfFirstItem, indexOfLastItem));
+		setTotalItems(filteredVehicles.length);
+
+	}, [activeClasses, currentPage]);
+
 	return (
 		<main>
 			<Container>
 				<div className={classes.searchPage}>
-					{/* <button
-						className={classes.showFiltersBtn}
-						onClick={showFiltersHandler}
-					>
-						<FaFilter /> Filters
-					</button>
-					<section
-						className={`${classes.filtersSection} ${
-							showFilters && classes.show
-						} `}
-					>
-						<button
-							className={classes.closeFiltersBtn}
-							onClick={showFiltersHandler}
-						>
-							<BsArrowLeftShort aria-hidden />
-							Hide
-						</button>
-						<form className={classes.form}>
-							<h2>Quick Search</h2>
-							<fieldset
-								aria-label="Location input"
-								className={classes.fieldset}
-							>
-								<label htmlFor="location">Location</label>
-								<input id="location" />
-							</fieldset>
-							<fieldset
-								aria-label="Choose pickup and return date"
-								className={classes.calendarOptions}
-							>
-								<label htmlFor="pick-up-date">
-									Pick up
-									<input
-										id="pick-up-date"
-										type="date"
-									/>
-								</label>
-								<label htmlFor="return-date">
-									Return
-									<input
-										id="return-date"
-										type="date"
-									/>
-								</label>
-							</fieldset>
-							<button
-								aria-label="Search car button"
-								className={classes.searchBtn}
-							>
-								Search
-							</button>
-						</form>
-						<div className={classes.filters}>
-							<div className={classes.row}>
-								<h4>Fuel Types</h4>
-								<label>
-									<input
-										type="checkbox"
-										name="fuel-type"
-										value="Gasoline"
-									/>
-									Gasoline
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="fuel-type"
-										value="Diesel"
-									/>
-									Diesel
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="fuel-type"
-										value="Hybrid"
-									/>
-									Hybrid
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="fuel-type"
-										value="Electric"
-									/>
-									Electric
-								</label>
-							</div>
-
-							<div className={classes.row}>
-								<h4>Transmission</h4>
-								<label>
-									<input
-										type="checkbox"
-										name="transmission"
-										value="Manual"
-									/>
-									Manual
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="transmission"
-										value="Automatic"
-									/>
-									Automatic
-								</label>
-							</div>
-
-							<div className={classes.row}>
-								<h4>Drivetrain</h4>
-								<label>
-									<input
-										type="checkbox"
-										name="drivetrain"
-										value="AWD"
-									/>
-									AWD
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="drivetrain"
-										value="FWD"
-									/>
-									FWD
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="drivetrain"
-										value="RWD"
-									/>
-									RWD
-								</label>
-								<label>
-									<input
-										type="checkbox"
-										name="drivetrain"
-										value="4WD"
-									/>
-									4WD
-								</label>
-							</div>
-
-							<div className={classes.row}>
-								<h4>Price</h4>
-								<RangeSlider
-									title="price"
-									minValue={20}
-									maxValue={45}
-								/>
-							</div>
-
-							<div className={classes.row}>
-								<h4>Year</h4>
-								<RangeSlider
-									title="year"
-									minValue={2016}
-									maxValue={2023}
-								/>
-							</div>
-						</div>
-					</section> */}
 					<SearchFilters />
 					<section className={classes.searchResults}>
 						<h2>Search Results</h2>
 						<div className={classes.categories}>
-							<div tabIndex={0} className={classes.categoryBox}>
-								<img
-									src="/public/SearchImages/B Class.webp"
-									alt="B class"
-									loading="lazy"
-								/>
-								<span>B Class</span>
-							</div>
-							<div tabIndex={0} className={classes.categoryBox}>
-								<img
-									src="/public/SearchImages/C Class.webp"
-									alt="C class"
-									loading="lazy"
-								/>
-								<span>C Class</span>
-							</div>
-							<div tabIndex={0} className={classes.categoryBox}>
-								<img
-									src="/public/SearchImages/D Class.webp"
-									alt="D class"
-									loading="lazy"
-								/>
-								<span>D Class</span>
-							</div>
-							<div tabIndex={0} className={classes.categoryBox}>
-								<img
-									src="/public/SearchImages/SUV.webp"
-									alt="SUV"
-									loading="lazy"
-								/>
-								<span>SUV</span>
-							</div>
+							{categoryBoxes.map((box, index) => (
+								<div
+									key={index}
+									tabIndex={0}
+									className={`${classes.categoryBox} ${
+										activeClasses.includes(box.class) ? classes.active : ''
+									}`}
+									onClick={() => handleCategoryClick(box.class)}
+								>
+									<img
+										src={box.imageSrc}
+										alt={`${box.class} Class`}
+										loading="lazy"
+									/>
+									<span aria-hidden>{`${box.class} Class`}</span>
+								</div>
+							))}
 						</div>
 						<div className={classes.results}>
 							{currentItems.map((vehicle) => (
@@ -247,10 +134,11 @@ const SearchPage: React.FC = () => {
 							))}
 						</div>
 						<Pagination
+							// totalItems={VEHICLES.length}
 							itemsPerPage={CARS_PER_PAGE}
-							totalItems={VEHICLES.length}
 							currentPage={currentPage}
-							paginate={paginate}
+							paginate={paginationHandler}
+							totalItems={totalItems}
 						/>
 					</section>
 				</div>

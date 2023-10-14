@@ -37,13 +37,14 @@
 		background-color: var(--green-color);
 		transform: scaleX(0);
 		transform-origin: bottom;
-		// transition: transform 0.3s ease-in-out;
 	}
+	&.active::after,
 	&:hover::after,
 	&:focus-visible::after {
 		transform: scale(1);
 	}
 }
+
 
 .results {
 	display: flex;

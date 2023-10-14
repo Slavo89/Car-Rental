@@ -71,6 +71,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="fuel-type"
 								value="Gasoline"
+								aria-label="Gasoline"
 							/>
 							Gasoline
 						</label>
@@ -79,6 +80,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="fuel-type"
 								value="Diesel"
+								aria-label="Diesel"
 							/>
 							Diesel
 						</label>
@@ -87,6 +89,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="fuel-type"
 								value="Hybrid"
+								aria-label="Hybrid"
 							/>
 							Hybrid
 						</label>
@@ -95,6 +98,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="fuel-type"
 								value="Electric"
+								aria-label="Electric"
 							/>
 							Electric
 						</label>
@@ -107,6 +111,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="transmission"
 								value="Manual"
+								aria-label="Manual"
 							/>
 							Manual
 						</label>
@@ -115,6 +120,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="transmission"
 								value="Automatic"
+								aria-label="Automatic"
 							/>
 							Automatic
 						</label>
@@ -127,6 +133,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="drivetrain"
 								value="AWD"
+								aria-label="AWD"
 							/>
 							AWD
 						</label>
@@ -135,6 +142,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="drivetrain"
 								value="FWD"
+								aria-label="FWD"
 							/>
 							FWD
 						</label>
@@ -143,6 +151,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="drivetrain"
 								value="RWD"
+								aria-label="RWD"
 							/>
 							RWD
 						</label>
@@ -151,6 +160,7 @@ const SearchFilters: React.FC = () => {
 								type="checkbox"
 								name="drivetrain"
 								value="4WD"
+								aria-label="4WD"
 							/>
 							4WD
 						</label>
