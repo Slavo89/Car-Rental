@@ -3,13 +3,30 @@ import classes from './SearchFilters.module.scss';
 import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../UI/RangeSlider';
+import { SelectedFilters } from '../../util/types';
 
-const SearchFilters: React.FC = () => {
+const SearchFilters: React.FC<{
+	onUpdateFilters: (filters: SelectedFilters) => void;
+}> = ({ onUpdateFilters }) => {
 	const [showFilters, setShowFilters] = useState(false);
 
 	const showFiltersHandler = () => {
 		setShowFilters(!showFilters);
 	};
+
+	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value, checked } = event.target;
+		// console.log(checked);
+		onUpdateFilters((prevFilters) => {
+			return {
+				...prevFilters,
+				[name]: checked
+					? [...(prevFilters[name] || []), value]
+					: (prevFilters[name] || []).filter((item: string) => item !== value),
+			};
+		});
+	};
+
 	return (
 		<>
 			<button
@@ -66,39 +83,43 @@ const SearchFilters: React.FC = () => {
 				<div className={classes.filters}>
 					<div className={classes.row}>
 						<h4>Fuel Types</h4>
-						<label>
+						<label htmlFor="fuel type">
 							<input
 								type="checkbox"
-								name="fuel-type"
+								name="fuel type"
 								value="Gasoline"
 								aria-label="Gasoline"
+								onChange={handleFilterChange}
 							/>
 							Gasoline
 						</label>
-						<label>
+						<label htmlFor="fuel type">
 							<input
 								type="checkbox"
-								name="fuel-type"
+								name="fuel type"
 								value="Diesel"
 								aria-label="Diesel"
+								onChange={handleFilterChange}
 							/>
 							Diesel
 						</label>
-						<label>
+						<label htmlFor="fuel type">
 							<input
 								type="checkbox"
-								name="fuel-type"
+								name="fuel type"
 								value="Hybrid"
 								aria-label="Hybrid"
+								onChange={handleFilterChange}
 							/>
 							Hybrid
 						</label>
-						<label>
+						<label htmlFor="fuel type">
 							<input
 								type="checkbox"
-								name="fuel-type"
+								name="fuel type"
 								value="Electric"
 								aria-label="Electric"
+								onChange={handleFilterChange}
 							/>
 							Electric
 						</label>
@@ -106,21 +127,23 @@ const SearchFilters: React.FC = () => {
 
 					<div className={classes.row}>
 						<h4>Transmission</h4>
-						<label>
+						<label htmlFor="transmission">
 							<input
 								type="checkbox"
 								name="transmission"
 								value="Manual"
 								aria-label="Manual"
+								onChange={handleFilterChange}
 							/>
 							Manual
 						</label>
-						<label>
+						<label htmlFor="transmission">
 							<input
 								type="checkbox"
 								name="transmission"
 								value="Automatic"
 								aria-label="Automatic"
+								onChange={handleFilterChange}
 							/>
 							Automatic
 						</label>
@@ -128,39 +151,43 @@ const SearchFilters: React.FC = () => {
 
 					<div className={classes.row}>
 						<h4>Drivetrain</h4>
-						<label>
+						<label htmlFor="drivetrain">
 							<input
 								type="checkbox"
 								name="drivetrain"
 								value="AWD"
 								aria-label="AWD"
+								onChange={handleFilterChange}
 							/>
 							AWD
 						</label>
-						<label>
+						<label htmlFor="drivetrain">
 							<input
 								type="checkbox"
 								name="drivetrain"
 								value="FWD"
 								aria-label="FWD"
+								onChange={handleFilterChange}
 							/>
 							FWD
 						</label>
-						<label>
+						<label htmlFor="drivetrain">
 							<input
 								type="checkbox"
 								name="drivetrain"
 								value="RWD"
 								aria-label="RWD"
+								onChange={handleFilterChange}
 							/>
 							RWD
 						</label>
-						<label>
+						<label htmlFor="drivetrain">
 							<input
 								type="checkbox"
 								name="drivetrain"
 								value="4WD"
 								aria-label="4WD"
+								onChange={handleFilterChange}
 							/>
 							4WD
 						</label>

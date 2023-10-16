@@ -35,7 +35,7 @@ export type VehicleData = {
 		consumption: number;
 		door: number;
 		drivetrain: string;
-		fuelType: string;
+		['fuel type']: string;
 		img: string;
 		make: string;
 		model: string;
@@ -44,4 +44,11 @@ export type VehicleData = {
 		transmission: string;
 		year: number;
 	};
+};
+
+export type SelectedFilters = {
+	'fuel type': string[];
+	transmission: string[];
+	drivetrain: string[];
+	[key: string]: string[];
 };

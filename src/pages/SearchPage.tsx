@@ -6,7 +6,7 @@ import SearchPageCard from '../components/Layout/Cards/SearchPageCard';
 import { fetchVehicles, queryClient } from '../util/http';
 import { useLoaderData } from 'react-router-dom';
 import Pagination from '../components/UI/Pagination';
-import { VehicleData } from '../util/types';
+import { SelectedFilters, VehicleData } from '../util/types';
 import GoTopButton from '../components/UI/GoTopButton';
 
 const CARS_PER_PAGE = 6;
@@ -19,14 +19,24 @@ const SearchPage: React.FC = () => {
 	}));
 	const [currentItems, setCurrentItems] = useState(VEHICLES);
 
-
 	// PAGINATION HANDLER
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalItems, setTotalItems] = useState(VEHICLES.length);
 
 	const paginationHandler = (pageNumber: number) => setCurrentPage(pageNumber);
 
-	// CLASS FILTERING
+	// FILTERS CHANGE
+	const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
+		'fuel type': [],
+		transmission: [],
+		drivetrain: [],
+	});
+
+	const handleUpdateFilters = (filters: SelectedFilters) => {
+		setSelectedFilters(filters);
+	};
+
+	// CAR CLASS FILTERING
 	const categoryBoxes = [
 		{
 			imageSrc: '/public/SearchImages/B Class.webp',
@@ -81,6 +91,23 @@ const SearchPage: React.FC = () => {
 			});
 		}
 
+		// Filter vehicles based on selected filters
+		if (selectedFilters['fuel type'].length > 0) {
+			filteredVehicles = filteredVehicles.filter((vehicle) =>
+				selectedFilters['fuel type'].includes(vehicle['fuel type'])
+			);
+		}
+		if (selectedFilters.transmission.length > 0) {
+			filteredVehicles = filteredVehicles.filter((vehicle) =>
+				selectedFilters.transmission.includes(vehicle.transmission)
+			);
+		}
+		if (selectedFilters.drivetrain.length > 0) {
+			filteredVehicles = filteredVehicles.filter((vehicle) =>
+				selectedFilters.drivetrain.includes(vehicle.drivetrain)
+			);
+		}
+
 		// Calculate the first and last element indexes for the current page
 		const indexOfLastItem = currentPage * CARS_PER_PAGE;
 		const indexOfFirstItem = indexOfLastItem - CARS_PER_PAGE;
@@ -88,14 +115,13 @@ const SearchPage: React.FC = () => {
 		// Set current elements to filtered
 		setCurrentItems(filteredVehicles.slice(indexOfFirstItem, indexOfLastItem));
 		setTotalItems(filteredVehicles.length);
-
-	}, [activeClasses, currentPage]);
+	}, [activeClasses, currentPage, selectedFilters]);
 
 	return (
 		<main>
 			<Container>
 				<div className={classes.searchPage}>
-					<SearchFilters />
+					<SearchFilters onUpdateFilters={handleUpdateFilters} />
 					<section className={classes.searchResults}>
 						<h2>Search Results</h2>
 						<div className={classes.categories}>
@@ -134,7 +160,6 @@ const SearchPage: React.FC = () => {
 							))}
 						</div>
 						<Pagination
-							// totalItems={VEHICLES.length}
 							itemsPerPage={CARS_PER_PAGE}
 							currentPage={currentPage}
 							paginate={paginationHandler}
