@@ -30,10 +30,38 @@ const SearchPage: React.FC = () => {
 		'fuel type': [],
 		transmission: [],
 		drivetrain: [],
+		minPrice: 20,
+		maxPrice: 45,
+		minYear: 2016,
+		maxYear: 2023,
 	});
 
-	const handleUpdateFilters = (filters: SelectedFilters) => {
+	const setPriceRange = (minPrice: number, maxPrice: number) => {
+		setSelectedFilters((prevFilters) => ({
+			...prevFilters,
+			minPrice,
+			maxPrice,
+		}));
+	};
+
+	const setYearRange = (minYear: number, maxYear: number) => {
+		setSelectedFilters((prevFilters) => ({
+			...prevFilters,
+			minYear,
+			maxYear,
+		}));
+	};
+
+	const handleUpdateFilters = (
+		filters: SelectedFilters,
+		minPrice: number,
+		maxPrice: number,
+		minYear: number,
+		maxYear: number
+	) => {
 		setSelectedFilters(filters);
+		setPriceRange(minPrice, maxPrice);
+		setYearRange(minYear, maxYear);
 	};
 
 	// CAR CLASS FILTERING
@@ -92,21 +120,35 @@ const SearchPage: React.FC = () => {
 		}
 
 		// Filter vehicles based on selected filters
-		if (selectedFilters['fuel type'].length > 0) {
-			filteredVehicles = filteredVehicles.filter((vehicle) =>
-				selectedFilters['fuel type'].includes(vehicle['fuel type'])
+		filteredVehicles = filteredVehicles.filter((vehicle) => {
+			const meetsFuelType =
+				selectedFilters['fuel type'].length === 0 ||
+				selectedFilters['fuel type'].includes(vehicle['fuel type']);
+			const meetsTransmission =
+				selectedFilters.transmission.length === 0 ||
+				selectedFilters.transmission.includes(vehicle.transmission);
+			const meetsDrivetrain =
+				selectedFilters.drivetrain.length === 0 ||
+				selectedFilters.drivetrain.includes(vehicle.drivetrain);
+			const meetsMinPrice = vehicle.price >= selectedFilters.minPrice;
+			const meetsMaxPrice =
+				selectedFilters.maxPrice === null ||
+				vehicle.price <= selectedFilters.maxPrice;
+			const meetsMinYear = vehicle.year >= selectedFilters.minYear;
+			const meetsMaxYear =
+				selectedFilters.maxYear === null ||
+				vehicle.year <= selectedFilters.maxYear;
+
+			return (
+				meetsFuelType &&
+				meetsTransmission &&
+				meetsDrivetrain &&
+				meetsMinPrice &&
+				meetsMaxPrice &&
+				meetsMinYear &&
+				meetsMaxYear
 			);
-		}
-		if (selectedFilters.transmission.length > 0) {
-			filteredVehicles = filteredVehicles.filter((vehicle) =>
-				selectedFilters.transmission.includes(vehicle.transmission)
-			);
-		}
-		if (selectedFilters.drivetrain.length > 0) {
-			filteredVehicles = filteredVehicles.filter((vehicle) =>
-				selectedFilters.drivetrain.includes(vehicle.drivetrain)
-			);
-		}
+		});
 
 		// Calculate the first and last element indexes for the current page
 		const indexOfLastItem = currentPage * CARS_PER_PAGE;
@@ -159,12 +201,16 @@ const SearchPage: React.FC = () => {
 								/>
 							))}
 						</div>
-						<Pagination
-							itemsPerPage={CARS_PER_PAGE}
-							currentPage={currentPage}
-							paginate={paginationHandler}
-							totalItems={totalItems}
-						/>
+						{currentItems.length > 0 ? (
+							<Pagination
+								itemsPerPage={CARS_PER_PAGE}
+								currentPage={currentPage}
+								paginate={paginationHandler}
+								totalItems={totalItems}
+							/>
+						) : (
+							<p>No matched cars :(</p>
+						)}
 					</section>
 				</div>
 			</Container>

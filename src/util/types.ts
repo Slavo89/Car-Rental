@@ -50,5 +50,9 @@ export type SelectedFilters = {
 	'fuel type': string[];
 	transmission: string[];
 	drivetrain: string[];
-	[key: string]: string[];
+	minPrice: number;
+	maxPrice: number;
+	minYear: number;
+	maxYear: number;
+	// [key: string]: string[];
 };

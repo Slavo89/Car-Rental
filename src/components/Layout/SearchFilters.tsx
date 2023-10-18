@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState } from 'react';
 import classes from './SearchFilters.module.scss';
 import { FaFilter } from 'react-icons/fa6';
@@ -5,26 +7,82 @@ import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../UI/RangeSlider';
 import { SelectedFilters } from '../../util/types';
 
-const SearchFilters: React.FC<{
-	onUpdateFilters: (filters: SelectedFilters) => void;
-}> = ({ onUpdateFilters }) => {
+interface Props {
+	onUpdateFilters: (
+		filters: SelectedFilters,
+		minPrice: number,
+		maxPrice: number,
+		minYear: number,
+		maxYear: number
+	) => void;
+}
+
+const SearchFilters = (props: Props) => {
 	const [showFilters, setShowFilters] = useState(false);
 
 	const showFiltersHandler = () => {
 		setShowFilters(!showFilters);
 	};
 
+	const [price, setPrice] = useState({ minPrice: 20, maxPrice: 45 });
+	const [year, setYear] = useState({ minYear: 2016, maxYear: 2023 });
+
+	const handlePriceChange = (minValue: number, maxValue: number) => {
+		setPrice({ minPrice: minValue, maxPrice: maxValue });
+		props.onUpdateFilters(
+			//@ts-ignore
+			(prevFilters) => {
+				return {
+					...prevFilters,
+					minPrice: minValue,
+					maxPrice: maxValue,
+				};
+			},
+			minValue,
+			maxValue,
+			year.minYear,
+			year.maxYear
+		);
+	};
+
+	const handleYearChange = (minValue: number, maxValue: number) => {
+		setYear({ minYear: minValue, maxYear: maxValue });
+		props.onUpdateFilters(
+			//@ts-ignore
+			(prevFilters) => {
+				return {
+					...prevFilters,
+					minYear: minValue,
+					maxYear: maxValue,
+				};
+			},
+			price.minPrice,
+			price.maxPrice,
+			minValue,
+			maxValue
+		);
+	};
+
 	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value, checked } = event.target;
-		// console.log(checked);
-		onUpdateFilters((prevFilters) => {
-			return {
-				...prevFilters,
-				[name]: checked
-					? [...(prevFilters[name] || []), value]
-					: (prevFilters[name] || []).filter((item: string) => item !== value),
-			};
-		});
+
+		props.onUpdateFilters(
+			//@ts-ignore
+			(prevFilters: SelectedFilters) => {
+				return {
+					...prevFilters,
+					[name]: checked
+						? //@ts-ignore
+						  [...prevFilters[name], value]
+						: //@ts-ignore
+						  prevFilters[name].filter((item: string) => item !== value),
+				};
+			},
+			price.minPrice,
+			price.maxPrice,
+			year.minYear,
+			year.maxYear
+		);
 	};
 
 	return (
@@ -83,17 +141,18 @@ const SearchFilters: React.FC<{
 				<div className={classes.filters}>
 					<div className={classes.row}>
 						<h4>Fuel Types</h4>
-						<label htmlFor="fuel type">
+						<label>
 							<input
 								type="checkbox"
 								name="fuel type"
+								id="fuel"
 								value="Gasoline"
 								aria-label="Gasoline"
 								onChange={handleFilterChange}
 							/>
 							Gasoline
 						</label>
-						<label htmlFor="fuel type">
+						<label>
 							<input
 								type="checkbox"
 								name="fuel type"
@@ -103,7 +162,7 @@ const SearchFilters: React.FC<{
 							/>
 							Diesel
 						</label>
-						<label htmlFor="fuel type">
+						<label>
 							<input
 								type="checkbox"
 								name="fuel type"
@@ -113,7 +172,7 @@ const SearchFilters: React.FC<{
 							/>
 							Hybrid
 						</label>
-						<label htmlFor="fuel type">
+						<label>
 							<input
 								type="checkbox"
 								name="fuel type"
@@ -127,7 +186,7 @@ const SearchFilters: React.FC<{
 
 					<div className={classes.row}>
 						<h4>Transmission</h4>
-						<label htmlFor="transmission">
+						<label>
 							<input
 								type="checkbox"
 								name="transmission"
@@ -137,7 +196,7 @@ const SearchFilters: React.FC<{
 							/>
 							Manual
 						</label>
-						<label htmlFor="transmission">
+						<label>
 							<input
 								type="checkbox"
 								name="transmission"
@@ -151,7 +210,7 @@ const SearchFilters: React.FC<{
 
 					<div className={classes.row}>
 						<h4>Drivetrain</h4>
-						<label htmlFor="drivetrain">
+						<label>
 							<input
 								type="checkbox"
 								name="drivetrain"
@@ -161,7 +220,7 @@ const SearchFilters: React.FC<{
 							/>
 							AWD
 						</label>
-						<label htmlFor="drivetrain">
+						<label>
 							<input
 								type="checkbox"
 								name="drivetrain"
@@ -171,7 +230,7 @@ const SearchFilters: React.FC<{
 							/>
 							FWD
 						</label>
-						<label htmlFor="drivetrain">
+						<label>
 							<input
 								type="checkbox"
 								name="drivetrain"
@@ -181,7 +240,7 @@ const SearchFilters: React.FC<{
 							/>
 							RWD
 						</label>
-						<label htmlFor="drivetrain">
+						<label>
 							<input
 								type="checkbox"
 								name="drivetrain"
@@ -197,8 +256,11 @@ const SearchFilters: React.FC<{
 						<h4>Price</h4>
 						<RangeSlider
 							title="price"
-							minValue={20}
-							maxValue={45}
+							minValue={price.minPrice}
+							maxValue={price.maxPrice}
+							minLimit={20}
+							maxLimit={45}
+							onChange={handlePriceChange}
 						/>
 					</div>
 
@@ -206,8 +268,11 @@ const SearchFilters: React.FC<{
 						<h4>Year</h4>
 						<RangeSlider
 							title="year"
-							minValue={2016}
-							maxValue={2023}
+							minValue={year.minYear}
+							maxValue={year.maxYear}
+							minLimit={2016}
+							maxLimit={2023}
+							onChange={handleYearChange}
 						/>
 					</div>
 				</div>
