@@ -54,5 +54,17 @@ export type SelectedFilters = {
 	maxPrice: number;
 	minYear: number;
 	maxYear: number;
-	// [key: string]: string[];
+	
+};
+
+export type AppContextData = {
+	location: string;
+	setLocation: (location: string) => void;
+	vehicleClass: string;
+	setVehicleClass: (vehicleClass: string) => void;
+	pickupDate: string;
+	setPickupDate: (pickupDate: string) => void;
+	returnDate: string;
+	setReturnDate: (returnDate: string) => void;
+	getTodayDate: () => string
 };

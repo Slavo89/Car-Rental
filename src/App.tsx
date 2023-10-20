@@ -6,8 +6,7 @@ import CarDetailsPage from './pages/CarDetailsPage';
 import Root from './pages/Root';
 import SearchPage, { loader as searchPageLoader } from './pages/SearchPage';
 import { queryClient } from './util/http';
-
-// const queryClient = new QueryClient();
+import { AppContextProvider } from './context/SearchValueContext';
 
 const router = createBrowserRouter([
 	{
@@ -36,7 +35,9 @@ const App: React.FC = () => {
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
+				<AppContextProvider>
+					<RouterProvider router={router} />
+				</AppContextProvider>
 			</QueryClientProvider>
 		</>
 	);

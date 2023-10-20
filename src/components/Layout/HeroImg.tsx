@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import classes from './HeroImg.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../context/SearchValueContext';
 
 const HeroImg: React.FC = () => {
 	const navigate = useNavigate();
-	const onSubmitHandler = () => {
+	const context = useAppContext();
+	const searchHandler = (event: FormEvent) => {
+		event.preventDefault();
 		navigate('/search');
-		// event.preventDefault();
 	};
 
 	return (
@@ -21,19 +23,26 @@ const HeroImg: React.FC = () => {
 						className={classes.heroFieldset}
 					>
 						<label htmlFor="location">Location</label>
-						<input id="location" />
+						<input
+							id="location"
+							onChange={(event) => context?.setLocation(event.target.value)}
+						/>
 					</fieldset>
 					<fieldset
 						aria-label="Select vehicle class"
 						className={classes.heroFieldset}
 					>
 						<label htmlFor="class">Vehicle class</label>
-						<select id="class">
-							<option value="Select class">Select class</option>
-							<option value="Select class">B Class</option>
-							<option value="Select class">C Class</option>
-							<option value="Select class">D Class</option>
-							<option value="Select class">SUV</option>
+						<select
+							id="class"
+							defaultValue={context?.vehicleClass}
+							onChange={(event) =>  context?.setVehicleClass(event.target.value) }
+						>
+							<option value="All">Select class</option>
+							<option value="B">B Class</option>
+							<option value="C">C Class</option>
+							<option value="D">D Class</option>
+							<option value="SUV">SUV</option>
 						</select>
 					</fieldset>
 					<fieldset
@@ -45,6 +54,11 @@ const HeroImg: React.FC = () => {
 							<input
 								id="dateInput"
 								type="date"
+								value={context?.pickupDate}
+								min={context?.getTodayDate()}
+								onChange={(event) => {
+									context?.setPickupDate(event.target.value);
+								}}
 							/>
 						</label>
 						<label>
@@ -52,18 +66,23 @@ const HeroImg: React.FC = () => {
 							<input
 								id="dateInput"
 								type="date"
+								value={context?.returnDate}
+								min={context?.pickupDate}
+								onChange={(event) => {
+									context?.setReturnDate(event.target.value);
+								}}
 							/>
 						</label>
 					</fieldset>
+					<button
+						aria-label="Search car button"
+						type="submit"
+						className={classes.searchBtn}
+						onClick={searchHandler}
+					>
+						Search
+					</button>
 				</form>
-				<button
-					aria-label="Search car button"
-					// type="submit"
-					className={classes.searchBtn}
-					onClick={onSubmitHandler}
-				>
-					Search
-				</button>
 			</div>
 		</header>
 	);

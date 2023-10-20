@@ -6,8 +6,11 @@ import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../UI/RangeSlider';
 import { SelectedFilters } from '../../util/types';
+import { useAppContext } from '../../context/SearchValueContext';
 
 interface Props {
+	onShowFilters: () => void;
+	showFilters: boolean;
 	onUpdateFilters: (
 		filters: SelectedFilters,
 		minPrice: number,
@@ -18,11 +21,7 @@ interface Props {
 }
 
 const SearchFilters = (props: Props) => {
-	const [showFilters, setShowFilters] = useState(false);
-
-	const showFiltersHandler = () => {
-		setShowFilters(!showFilters);
-	};
+	const context = useAppContext();
 
 	const [price, setPrice] = useState({ minPrice: 20, maxPrice: 45 });
 	const [year, setYear] = useState({ minYear: 2016, maxYear: 2023 });
@@ -89,16 +88,18 @@ const SearchFilters = (props: Props) => {
 		<>
 			<button
 				className={classes.showFiltersBtn}
-				onClick={showFiltersHandler}
+				onClick={props.onShowFilters}
 			>
 				<FaFilter /> Filters
 			</button>
 			<section
-				className={`${classes.filtersSection} ${showFilters && classes.show} `}
+				className={`${classes.filtersSection} ${
+					props.showFilters && classes.show
+				} `}
 			>
 				<button
 					className={classes.closeFiltersBtn}
-					onClick={showFiltersHandler}
+					onClick={props.onShowFilters}
 				>
 					<BsArrowLeftShort aria-hidden />
 					Hide
@@ -110,7 +111,11 @@ const SearchFilters = (props: Props) => {
 						className={classes.fieldset}
 					>
 						<label htmlFor="location">Location</label>
-						<input id="location" />
+						<input
+							id="location"
+							value={context?.location}
+							onChange={(event) => context?.setLocation(event.target.value)}
+						/>
 					</fieldset>
 					<fieldset
 						aria-label="Choose pickup and return date"
@@ -121,6 +126,10 @@ const SearchFilters = (props: Props) => {
 							<input
 								id="pick-up-date"
 								type="date"
+								value={context!.pickupDate}
+								onChange={(event) => {
+									context?.setPickupDate(event.target.value);
+								}}
 							/>
 						</label>
 						<label htmlFor="return-date">
@@ -128,12 +137,18 @@ const SearchFilters = (props: Props) => {
 							<input
 								id="return-date"
 								type="date"
+								value={context!.returnDate}
+								onChange={(event) => {
+									context?.setReturnDate(event.target.value);
+								}}
 							/>
 						</label>
 					</fieldset>
 					<button
 						aria-label="Search car button"
 						className={classes.searchBtn}
+						type="submit"
+						onClick={(event) => event.preventDefault()}
 					>
 						Search
 					</button>

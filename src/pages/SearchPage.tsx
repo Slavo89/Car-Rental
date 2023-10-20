@@ -8,10 +8,25 @@ import { useLoaderData } from 'react-router-dom';
 import Pagination from '../components/UI/Pagination';
 import { SelectedFilters, VehicleData } from '../util/types';
 import GoTopButton from '../components/UI/GoTopButton';
+import { useAppContext } from '../context/SearchValueContext';
 
 const CARS_PER_PAGE = 6;
 
 const SearchPage: React.FC = () => {
+	const context = useAppContext()
+	console.log(context?.vehicleClass);
+	const [showFilters, setShowFilters] = useState(false);
+
+	const showFiltersHandler = () => {
+		if (showFilters) {
+			setShowFilters(false);
+			document.body.style.overflowY = 'unset';
+		} else {
+			setShowFilters(true)
+			document.body.style.overflowY = 'hidden';
+		}
+	};
+
 	const DATA = useLoaderData() as VehicleData;
 	const VEHICLES = Object.keys(DATA).map((vehicleId) => ({
 		id: vehicleId,
@@ -157,13 +172,19 @@ const SearchPage: React.FC = () => {
 		// Set current elements to filtered
 		setCurrentItems(filteredVehicles.slice(indexOfFirstItem, indexOfLastItem));
 		setTotalItems(filteredVehicles.length);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeClasses, currentPage, selectedFilters]);
 
 	return (
 		<main>
 			<Container>
 				<div className={classes.searchPage}>
-					<SearchFilters onUpdateFilters={handleUpdateFilters} />
+					<SearchFilters
+						onUpdateFilters={handleUpdateFilters}
+						onShowFilters={showFiltersHandler}
+						showFilters={showFilters}
+					/>
+					{showFilters && <div className={classes.backdrop}></div>}
 					<section className={classes.searchResults}>
 						<h2>Search Results</h2>
 						<div className={classes.categories}>

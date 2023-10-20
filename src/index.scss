@@ -48,3 +48,32 @@ section {
 h4 {
 	font-size: 2rem;
 }
+
+input[type='date']:focus {
+	outline: none;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+input[type="date"]::-webkit-calendar-picker {
+  background-color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  /* Dodaj inne style według potrzeb */
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+	// background-color: black;
+	// cursor: pointer;
+
+	// width: 100%;
+	padding-left: auto;
+	cursor: pointer;
+	&:focus-visible {
+		outline: none;
+	}
+}
+
+input[type='date']::-webkit-inner-spin-button {
+	background-color: black;
+}

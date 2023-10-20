@@ -32,10 +32,6 @@ input[type='checkbox'] {
 	}
 }
 
-.searchPage {
-	font-size: 1.4rem;
-}
-
 .showFiltersBtn {
 	padding: 1rem 2.5rem;
 	display: flex;
@@ -80,7 +76,7 @@ input[type='checkbox'] {
 	flex-direction: column;
 	gap: 2rem;
 	background-color: var(--blue-color);
-	border-radius: 5px;
+	// border-radius: 5px;
 	h2 {
 		color: var(--font-white);
 	}
@@ -99,24 +95,22 @@ input[type='checkbox'] {
 			outline: none;
 		}
 	}
-	.calendarOptions {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 1rem;
-		border: none;
-		color: var(--font-grey);
-		@media (width>= 400px) {
-			flex-direction: row;
-			label {
-				width: 47%;
-			}
-		}
-		input {
-			width: 100%;
-			padding: 1.5rem 2rem;
-			border: 1px solid var(--border-color);
-		}
+}
+.calendarOptions {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1rem;
+	border: none;
+	color: var(--font-grey);
+
+	label {
+		width: 100%;
+	}
+	input {
+		width: 100%;
+		padding: 1.5rem 2rem;
+		border: 1px solid var(--border-color);
 	}
 }
 .searchBtn {
@@ -187,6 +181,12 @@ input[type='checkbox'] {
 	}
 }
 
+@media (width>= 400px) {
+	.calendarOptions {
+		flex-direction: row;
+	}
+}
+
 @media (width >= 770px) {
 	.showFiltersBtn {
 		display: none;
@@ -199,5 +199,15 @@ input[type='checkbox'] {
 		position: relative;
 		left: 0;
 		width: 35%;
+	}
+
+	.calendarOptions {
+		flex-direction: column;
+	}
+}
+
+@media (width >= 1170px) {
+	.calendarOptions {
+		flex-direction: row;
 	}
 }
