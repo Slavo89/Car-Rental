@@ -8,13 +8,10 @@ import { useLoaderData } from 'react-router-dom';
 import Pagination from '../components/UI/Pagination';
 import { SelectedFilters, VehicleData } from '../util/types';
 import GoTopButton from '../components/UI/GoTopButton';
-import { useAppContext } from '../context/SearchValueContext';
 
 const CARS_PER_PAGE = 6;
 
 const SearchPage: React.FC = () => {
-	const context = useAppContext()
-	console.log(context?.vehicleClass);
 	const [showFilters, setShowFilters] = useState(false);
 
 	const showFiltersHandler = () => {

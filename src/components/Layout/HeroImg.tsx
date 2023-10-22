@@ -1,13 +1,23 @@
-import React, { FormEvent } from 'react';
+import React, { useRef } from 'react';
 import classes from './HeroImg.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../../context/SearchValueContext';
+import { useSearchValueContext } from '../../context/SearchValueContext';
 
 const HeroImg: React.FC = () => {
 	const navigate = useNavigate();
-	const context = useAppContext();
-	const searchHandler = (event: FormEvent) => {
+	const context = useSearchValueContext();
+
+	const locationRef = useRef<HTMLInputElement | null>(null);
+	const pickupDateRef = useRef<HTMLInputElement | null>(null);
+	const returnDateRef = useRef<HTMLInputElement | null>(null);
+
+	const searchHandler = (event: React.FormEvent) => {
 		event.preventDefault();
+
+		context?.setLocation(locationRef.current?.value);
+		context?.setPickupDate(pickupDateRef.current?.value);
+		context?.setReturnDate(returnDateRef.current?.value);
+
 		navigate('/search');
 	};
 
@@ -25,10 +35,11 @@ const HeroImg: React.FC = () => {
 						<label htmlFor="location">Location</label>
 						<input
 							id="location"
-							onChange={(event) => context?.setLocation(event.target.value)}
+							ref={locationRef}
+							// onChange={(event) => context?.setLocation(event.target.value)}
 						/>
 					</fieldset>
-					<fieldset
+					{/* <fieldset
 						aria-label="Select vehicle class"
 						className={classes.heroFieldset}
 					>
@@ -44,7 +55,7 @@ const HeroImg: React.FC = () => {
 							<option value="D">D Class</option>
 							<option value="SUV">SUV</option>
 						</select>
-					</fieldset>
+					</fieldset> */}
 					<fieldset
 						aria-label="Choose pickup and return date"
 						className={classes.heroCalendarOptions}
@@ -54,11 +65,13 @@ const HeroImg: React.FC = () => {
 							<input
 								id="dateInput"
 								type="date"
-								value={context?.pickupDate}
+								ref={pickupDateRef}
+								// value={context?.getTodayDate()}
 								min={context?.getTodayDate()}
-								onChange={(event) => {
-									context?.setPickupDate(event.target.value);
-								}}
+								// onChange={(event) => {
+								// 	context?.setPickupDate(event.target.value);
+								// }}
+								// onChange={pickupDateRef.current?.value}
 							/>
 						</label>
 						<label>
@@ -66,11 +79,12 @@ const HeroImg: React.FC = () => {
 							<input
 								id="dateInput"
 								type="date"
-								value={context?.returnDate}
+								ref={returnDateRef}
+								// value={context?.returnDate}
 								min={context?.pickupDate}
-								onChange={(event) => {
-									context?.setReturnDate(event.target.value);
-								}}
+								// onChange={(event) => {
+								// 	context?.setReturnDate(event.target.value);
+								// }}
 							/>
 						</label>
 					</fieldset>

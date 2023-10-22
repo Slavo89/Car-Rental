@@ -6,7 +6,7 @@ import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../UI/RangeSlider';
 import { SelectedFilters } from '../../util/types';
-import { useAppContext } from '../../context/SearchValueContext';
+import { useSearchValueContext } from '../../context/SearchValueContext';
 
 interface Props {
 	onShowFilters: () => void;
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const SearchFilters = (props: Props) => {
-	const context = useAppContext();
+	const context = useSearchValueContext();
 
 	const [price, setPrice] = useState({ minPrice: 20, maxPrice: 45 });
 	const [year, setYear] = useState({ minYear: 2016, maxYear: 2023 });
@@ -104,7 +104,7 @@ const SearchFilters = (props: Props) => {
 					<BsArrowLeftShort aria-hidden />
 					Hide
 				</button>
-				<form className={classes.form}>
+				<div className={classes.form}>
 					<h2>Quick Search</h2>
 					<fieldset
 						aria-label="Location input"
@@ -126,6 +126,7 @@ const SearchFilters = (props: Props) => {
 							<input
 								id="pick-up-date"
 								type="date"
+								min={context?.getTodayDate()}
 								value={context!.pickupDate}
 								onChange={(event) => {
 									context?.setPickupDate(event.target.value);
@@ -137,6 +138,7 @@ const SearchFilters = (props: Props) => {
 							<input
 								id="return-date"
 								type="date"
+								min={context!.pickupDate}
 								value={context!.returnDate}
 								onChange={(event) => {
 									context?.setReturnDate(event.target.value);
@@ -144,15 +146,15 @@ const SearchFilters = (props: Props) => {
 							/>
 						</label>
 					</fieldset>
-					<button
+					{/* <button
 						aria-label="Search car button"
 						className={classes.searchBtn}
 						type="submit"
 						onClick={(event) => event.preventDefault()}
 					>
 						Search
-					</button>
-				</form>
+					</button> */}
+				</div>
 				<div className={classes.filters}>
 					<div className={classes.row}>
 						<h4>Fuel Types</h4>

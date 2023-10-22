@@ -60,7 +60,7 @@ const MainPageCard = (props: Data) => {
 						tabIndex={props.disableFocus ? -1 : 0}
 						aria-label="Rent button"
 						className={classes.rentBtn}
-						onClick={(event) => event.preventDefault()}
+						// onClick={(event) => event.preventDefault()}
 					>
 						Rent Now
 					</button>

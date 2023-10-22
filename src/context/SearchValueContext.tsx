@@ -8,16 +8,13 @@ export function AppContextProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const [location, setLocation] = useState('');
-	const [vehicleClass, setVehicleClass] = useState('All');
-	const [pickupDate, setPickupDate] = useState(getTodayDate());
-	const [returnDate, setReturnDate] = useState('');
+	const [location, setLocation] = useState<string | undefined>('');
+	const [pickupDate, setPickupDate] = useState<string | undefined>(getTodayDate());
+	const [returnDate, setReturnDate] = useState<string | undefined>('');
 
 	const contextData = {
 		location,
 		setLocation,
-		vehicleClass,
-		setVehicleClass,
 		pickupDate,
 		setPickupDate,
 		returnDate,
@@ -48,6 +45,6 @@ export function AppContextProvider({
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useAppContext() {
+export function useSearchValueContext() {
 	return useContext(AppContext);
 }

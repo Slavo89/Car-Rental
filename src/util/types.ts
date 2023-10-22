@@ -54,17 +54,21 @@ export type SelectedFilters = {
 	maxPrice: number;
 	minYear: number;
 	maxYear: number;
-	
 };
 
 export type AppContextData = {
-	location: string;
-	setLocation: (location: string) => void;
-	vehicleClass: string;
-	setVehicleClass: (vehicleClass: string) => void;
-	pickupDate: string;
-	setPickupDate: (pickupDate: string) => void;
-	returnDate: string;
-	setReturnDate: (returnDate: string) => void;
-	getTodayDate: () => string
+	// location: string;
+	// setLocation: (location: string | undefined) => void;
+	// pickupDate: string;
+	// setPickupDate: (pickupDate: string | undefined) => void;
+	// returnDate: string;
+	// setReturnDate: (returnDate: string | undefined) => void;
+	// getTodayDate: () => string;
+	location: string | undefined;
+	setLocation: React.Dispatch<React.SetStateAction<string | undefined>>;
+	pickupDate: string | undefined;
+	setPickupDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+	returnDate: string | undefined;
+	setReturnDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+	getTodayDate: () => string;
 };
