@@ -33,9 +33,10 @@ export async function fetchCarDetails(id: string | undefined) {
 	return details;
 }
 
-export async function fetchMap() {
+export async function fetchMap(enteredAddress: string) {
 	const response = await fetch(
-		`https://maps.googleapis.com/maps/api/js?key=AIzaSyCsb-KlrUNZTfTWjz1Fof6L4-BGk71HfHI&callback=console.debug&libraries=maps,marker&v=beta.json`
+		`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(enteredAddress)}&key=AIzaSyCsb-KlrUNZTfTWjz1Fof6L4-BGk71HfHI`
+		// `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCsb-KlrUNZTfTWjz1Fof6L4-BGk71HfHI`
 	);
 
 	if (!response.ok) {
