@@ -11,15 +11,11 @@ import { ExtendedData } from '../../util/types';
 
 const RentalCars: React.FC = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
 	
-
 	const { data, isPending, isError, error } = useQuery({
 		queryKey: ['vehicles'],
 		queryFn: fetchVehicles,
 	});
-
-	
 
 	let content;
 

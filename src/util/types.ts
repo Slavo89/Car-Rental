@@ -57,13 +57,6 @@ export type SelectedFilters = {
 };
 
 export type AppContextData = {
-	// location: string;
-	// setLocation: (location: string | undefined) => void;
-	// pickupDate: string;
-	// setPickupDate: (pickupDate: string | undefined) => void;
-	// returnDate: string;
-	// setReturnDate: (returnDate: string | undefined) => void;
-	// getTodayDate: () => string;
 	location: string | undefined;
 	setLocation: React.Dispatch<React.SetStateAction<string | undefined>>;
 	pickupDate: string | undefined;

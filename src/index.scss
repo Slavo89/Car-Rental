@@ -59,14 +59,10 @@ input[type="date"]::-webkit-calendar-picker {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
-  /* Dodaj inne style według potrzeb */
 }
 
 input[type='date']::-webkit-calendar-picker-indicator {
-	// background-color: black;
-	// cursor: pointer;
 
-	// width: 100%;
 	padding-left: auto;
 	cursor: pointer;
 	&:focus-visible {
@@ -76,8 +72,4 @@ input[type='date']::-webkit-calendar-picker-indicator {
 
 input[type='date']::-webkit-inner-spin-button {
 	background-color: black;
-}
-
-#map {
-	height: 400px;
 }

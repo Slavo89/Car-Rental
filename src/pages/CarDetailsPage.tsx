@@ -11,7 +11,7 @@ import { fetchCarDetails, queryClient } from '../util/http';
 import { useSearchValueContext } from '../context/SearchValueContext';
 import { ExtendedData } from '../util/types';
 import { useState } from 'react';
-import MapComponent from '../components/UI/MapComponent';
+import MapComponent from '../components/MapComponents/MapComponent';
 
 const CarDetailsPage = () => {
 	const navigate = useNavigate();

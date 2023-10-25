@@ -36,26 +36,9 @@ const HeroImg: React.FC = () => {
 						<input
 							id="location"
 							ref={locationRef}
-							// onChange={(event) => context?.setLocation(event.target.value)}
+							onChange={(event) => context?.setLocation(event.target.value)}
 						/>
 					</fieldset>
-					{/* <fieldset
-						aria-label="Select vehicle class"
-						className={classes.heroFieldset}
-					>
-						<label htmlFor="class">Vehicle class</label>
-						<select
-							id="class"
-							defaultValue={context?.vehicleClass}
-							onChange={(event) =>  context?.setVehicleClass(event.target.value) }
-						>
-							<option value="All">Select class</option>
-							<option value="B">B Class</option>
-							<option value="C">C Class</option>
-							<option value="D">D Class</option>
-							<option value="SUV">SUV</option>
-						</select>
-					</fieldset> */}
 					<fieldset
 						aria-label="Choose pickup and return date"
 						className={classes.heroCalendarOptions}
@@ -68,9 +51,9 @@ const HeroImg: React.FC = () => {
 								ref={pickupDateRef}
 								// value={context?.getTodayDate()}
 								min={context?.getTodayDate()}
-								// onChange={(event) => {
-								// 	context?.setPickupDate(event.target.value);
-								// }}
+								onChange={(event) => {
+									context?.setPickupDate(event.target.value);
+								}}
 								// onChange={pickupDateRef.current?.value}
 							/>
 						</label>
@@ -82,9 +65,9 @@ const HeroImg: React.FC = () => {
 								ref={returnDateRef}
 								// value={context?.returnDate}
 								min={context?.pickupDate}
-								// onChange={(event) => {
-								// 	context?.setReturnDate(event.target.value);
-								// }}
+								onChange={(event) => {
+									context?.setReturnDate(event.target.value);
+								}}
 							/>
 						</label>
 					</fieldset>
