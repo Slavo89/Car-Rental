@@ -12,11 +12,12 @@ const DEFAULT_LOCATION: LatLng = { lat: 52.2296756, lng: 21.0122287 };
 
 setKey(import.meta.env.VITE_GOOGLE_KEY);
 
-const MapComponent = ({ location }: { location?: string }) => {
+const MapComponent = ({ location, onValidate }: { location?: string, onValidate: boolean }) => {
 	const [libraries] = useState(['places']); // preventing error on useLoadScript
 
 	const [selectedLocation, setSelectedLocation] =
 		useState<LatLng>(DEFAULT_LOCATION);
+
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,12 +37,6 @@ const MapComponent = ({ location }: { location?: string }) => {
 				})
 				.catch(console.error);
 		}
-		fromAddress('Warsaw')
-			.then(({ results }) => {
-				const { lat, lng } = results[0].geometry.location;
-				setSelectedLocation({ lat, lng });
-			})
-			.catch(console.error);
 	}, [location]);
 
 	if (!isLoaded) return <LoadingIndicator />;
@@ -49,7 +44,10 @@ const MapComponent = ({ location }: { location?: string }) => {
 		<>
 			<h4>Choose pickup location</h4>
 			<div className={classes.placesContainer}>
-				<PlacesAutocomplete setSelected={setSelectedLocation} />
+				<PlacesAutocomplete
+					setSelected={setSelectedLocation}
+					onValidate={onValidate}
+				/>
 			</div>
 			<GoogleMap
 				center={selectedLocation}

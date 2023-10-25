@@ -15,9 +15,9 @@ import {
 import '@reach/combobox/styles.css';
 import { useSearchValueContext } from '../../context/SearchValueContext';
 
-
 const PlacesAutocomplete: React.FC<{
 	setSelected: (location: LatLng) => void;
+	onValidate: boolean;
 }> = (props) => {
 	const context = useSearchValueContext();
 
@@ -45,7 +45,12 @@ const PlacesAutocomplete: React.FC<{
 				value={value}
 				onChange={(event) => setValue(event.target.value)}
 				disabled={!ready}
-				className={classes.comboboxInput}
+				// className={classes.comboboxInput}
+				className={
+					props.onValidate
+						? classes.comboboxInput
+						: `${classes.error} ${classes.comboboxInput}`
+				}
 				placeholder="Type the location"
 			/>
 			<ComboboxPopover>

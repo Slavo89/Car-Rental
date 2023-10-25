@@ -1,10 +1,6 @@
 import classes from './CarDetailsPage.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
-import {
-	BsShieldFillCheck,
-	BsInfoCircleFill,
-	BsArrowLeftShort,
-} from 'react-icons/bs';
+import { BsArrowLeftShort } from 'react-icons/bs';
 import Container from '../components/UI/Container';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { fetchCarDetails, queryClient } from '../util/http';
@@ -15,8 +11,14 @@ import MapComponent from '../components/MapComponents/MapComponent';
 
 const CarDetailsPage = () => {
 	const navigate = useNavigate();
-	const context = useSearchValueContext();
 	const DATA = useLoaderData() as ExtendedData;
+	const context = useSearchValueContext();
+	const [validateInputs, setValidateInputs] = useState({
+		pickupDate: !!context?.pickupDate,
+		returnDate: !!context?.returnDate,
+		location: !!context?.location,
+	});
+	const [valid, setValid] = useState<boolean>(true);
 
 	const [totalPrice, setTotalPrice] = useState(DATA.price);
 	const handleOptionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +33,33 @@ const CarDetailsPage = () => {
 			}
 		}
 	};
+
+	const handleRentButton = () => {
+		const newValidation = {
+			pickupDate: !!context?.pickupDate,
+			returnDate: !!context?.returnDate,
+			location: !!context?.location,
+		};
+
+		setValidateInputs(newValidation);
+		if (
+			validateInputs.location === true &&
+			validateInputs.pickupDate === true &&
+			validateInputs.location === true
+		) {
+			setValid(true);
+		} else {
+			setValid(false);
+		}
+	};
+
+	console.log(validateInputs);
 	return (
 		<main>
 			<Container>
 				<div className={classes.carDetailsPage}>
 					<div className={classes.detailsContent}>
-						<div className={classes.heading}>
+						<nav className={classes.nav}>
 							<button
 								className={classes.goBackButton}
 								onClick={() => navigate(-1)}
@@ -44,17 +67,7 @@ const CarDetailsPage = () => {
 								<BsArrowLeftShort aria-hidden />
 								Go Back
 							</button>
-							<div className={classes.importantInfo}>
-								<span>
-									<BsInfoCircleFill aria-hidden />
-									<span>Importrant Information</span>
-								</span>
-								<span>
-									<BsShieldFillCheck aria-hidden />
-									<span>Insurance</span>
-								</span>
-							</div>
-						</div>
+						</nav>
 						<div className={classes.carInfo}>
 							<img
 								src={DATA.img}
@@ -130,8 +143,8 @@ const CarDetailsPage = () => {
 								</div>
 							</div>
 						</div>
-						<div className={classes.description}>
-							<h4>Description</h4>
+						<div className={classes.insurance}>
+							<h4>Insurance</h4>
 							<p>
 								Collision Damage Waiver and Theft Protection are included with
 								this car. It covers damage and theft of the vehicle with the
@@ -144,6 +157,24 @@ const CarDetailsPage = () => {
 								have the excess amount available on your card when you pick up
 								the car.
 							</p>
+						</div>
+						<div className={classes.importantInfo}>
+							<h4>Age requirements</h4>
+							<p>The minimum rental age for this car is 18 years.</p>
+							<h4>Getting a car</h4>
+							<p>
+								Passport or ID is required. An international driver’s license is
+								required if the national driver’s license is not printed in
+								English.
+							</p>
+							<h4>Payment methods</h4>
+							<p>
+								The primary driver must have a credit card in his / her name
+								when picking up the car. The card must have sufficient funds
+								available to cover the amount of the deductible / down payment
+								(which will be blocked on the card during the rental).
+							</p>
+							<p>Cash and debit cards are not accepted.</p>
 						</div>
 						<div className={classes.features}>
 							<h4>Following for free</h4>
@@ -178,6 +209,7 @@ const CarDetailsPage = () => {
 										onChange={(event) =>
 											context!.setPickupDate(event.target.value)
 										}
+										className={validateInputs.pickupDate ? '' : classes.error}
 									/>
 								</label>
 								<label>
@@ -190,10 +222,14 @@ const CarDetailsPage = () => {
 										onChange={(event) =>
 											context!.setReturnDate(event.target.value)
 										}
+										className={validateInputs.returnDate ? '' : classes.error}
 									/>
 								</label>
 							</fieldset>
-							<MapComponent location={context?.location} />
+							<MapComponent
+								location={context?.location}
+								onValidate={validateInputs.location}
+							/>
 							<div className={classes.options}>
 								<h4>Additional Options:</h4>
 								<div className={classes.form}>
@@ -242,7 +278,18 @@ const CarDetailsPage = () => {
 									Total: <span>${totalPrice}.00</span> / day
 								</p>
 							</div>
-							<button className={classes.rentButton}>Rent Now</button>
+							{!valid && (
+								<span className={classes.validationError}>
+									Wprowadź wszystkie wymagane informacje.
+								</span>
+							)}
+							<button
+								className={classes.rentButton}
+								onClick={handleRentButton}
+								// disabled={!valid}
+							>
+								Rent Now
+							</button>
 						</div>
 					</div>
 				</div>
