@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchValueContext } from '../../context/SearchValueContext';
 
 const HeroImg: React.FC = () => {
+	// const ref = useRef()
 	const navigate = useNavigate();
 	const context = useSearchValueContext();
 
@@ -27,7 +28,10 @@ const HeroImg: React.FC = () => {
 				<h1>
 					Find & Book <br /> a Great Deal Today
 				</h1>
-				<form className={classes.heroForm}>
+				<form
+					className={classes.heroForm}
+					onSubmit={searchHandler}
+				>
 					<fieldset
 						aria-label="Location input"
 						className={classes.heroFieldset}
@@ -36,6 +40,7 @@ const HeroImg: React.FC = () => {
 						<input
 							id="location"
 							ref={locationRef}
+							// autoComplete='off'
 							onChange={(event) => context?.setLocation(event.target.value)}
 						/>
 					</fieldset>
@@ -49,12 +54,11 @@ const HeroImg: React.FC = () => {
 								id="dateInput"
 								type="date"
 								ref={pickupDateRef}
-								// value={context?.getTodayDate()}
+								value={context?.pickupDate}
 								min={context?.getTodayDate()}
 								onChange={(event) => {
 									context?.setPickupDate(event.target.value);
 								}}
-								// onChange={pickupDateRef.current?.value}
 							/>
 						</label>
 						<label>
@@ -63,7 +67,7 @@ const HeroImg: React.FC = () => {
 								id="dateInput"
 								type="date"
 								ref={returnDateRef}
-								// value={context?.returnDate}
+								value={context?.returnDate}
 								min={context?.pickupDate}
 								onChange={(event) => {
 									context?.setReturnDate(event.target.value);
@@ -73,9 +77,8 @@ const HeroImg: React.FC = () => {
 					</fieldset>
 					<button
 						aria-label="Search car button"
-						type="submit"
 						className={classes.searchBtn}
-						onClick={searchHandler}
+						// onClick={searchHandler}
 					>
 						Search
 					</button>

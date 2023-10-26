@@ -10,16 +10,11 @@ import { useState } from 'react';
 import MapComponent from '../components/MapComponents/MapComponent';
 
 const CarDetailsPage = () => {
-	const navigate = useNavigate();
 	const DATA = useLoaderData() as ExtendedData;
 	const context = useSearchValueContext();
-	const [validateInputs, setValidateInputs] = useState({
-		pickupDate: !!context?.pickupDate,
-		returnDate: !!context?.returnDate,
-		location: !!context?.location,
-	});
-	const [valid, setValid] = useState<boolean>(true);
+	const navigate = useNavigate();
 
+	// HANDLING PRICE VALUE
 	const [totalPrice, setTotalPrice] = useState(DATA.price);
 	const handleOptionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const dataCalculate = event.target.getAttribute('data-calculate');
@@ -34,7 +29,17 @@ const CarDetailsPage = () => {
 		}
 	};
 
-	const handleRentButton = () => {
+	//HANDLING VALIDATION AND FORM SUBMITTING
+	const [validateInputs, setValidateInputs] = useState({
+		pickupDate: !!context?.pickupDate,
+		returnDate: !!context?.returnDate,
+		location: !!context?.location,
+	});
+	const [isValid, setIsValid] = useState<boolean>(false);
+	const [wasValidated, setWasValidated] = useState<boolean>(false);
+
+	const handleValidation = () => {
+		setWasValidated(true);
 		const newValidation = {
 			pickupDate: !!context?.pickupDate,
 			returnDate: !!context?.returnDate,
@@ -47,13 +52,25 @@ const CarDetailsPage = () => {
 			validateInputs.pickupDate === true &&
 			validateInputs.location === true
 		) {
-			setValid(true);
+			setIsValid(true);
 		} else {
-			setValid(false);
+			setIsValid(false);
 		}
 	};
 
-	console.log(validateInputs);
+	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const fd = new FormData(event.currentTarget);
+		const data = Object.fromEntries(fd.entries());
+		const additions = fd.getAll('addition') as unknown as FormDataEntryValue;
+		// const additions = fd.getAll('addition');
+		
+		data.additions = additions;
+		console.log(data);
+		console.log(additions);
+	};
+
+	// console.log(validateInputs);
 	return (
 		<main>
 			<Container>
@@ -194,50 +211,67 @@ const CarDetailsPage = () => {
 						<span className={classes.priceLabel}>
 							${DATA.price}.00 <span>/ day</span>
 						</span>
-						<div className={classes.formContainer}>
+						<form
+							className={classes.formContainer}
+							onSubmit={handleFormSubmit}
+						>
 							<fieldset
 								aria-label="Choose pickup and return date"
 								className={classes.heroCalendarOptions}
 							>
-								<label>
+								<label htmlFor="pickup-date">
 									Pick-Up
 									<input
 										id="dateInput"
 										type="date"
+										name="pickup-date"
 										min={context?.getTodayDate()}
 										value={context?.pickupDate}
 										onChange={(event) =>
 											context!.setPickupDate(event.target.value)
 										}
-										className={validateInputs.pickupDate ? '' : classes.error}
+										className={
+											!validateInputs.pickupDate && wasValidated
+												? classes.error
+												: ''
+										}
+										required
 									/>
 								</label>
-								<label>
+								<label htmlFor="return-date">
 									Return
 									<input
 										id="dateInput"
 										type="date"
+										name="return-date"
 										min={context?.pickupDate}
 										value={context?.returnDate}
 										onChange={(event) =>
 											context!.setReturnDate(event.target.value)
 										}
-										className={validateInputs.returnDate ? '' : classes.error}
+										className={
+											!validateInputs.returnDate && wasValidated
+												? classes.error
+												: ''
+										}
+										required
 									/>
 								</label>
 							</fieldset>
 							<MapComponent
 								location={context?.location}
 								onValidate={validateInputs.location}
+								onWasValidated={wasValidated}
 							/>
 							<div className={classes.options}>
 								<h4>Additional Options:</h4>
-								<div className={classes.form}>
+								<div className={classes.additionalOptions}>
 									<label htmlFor="child-seat">
 										<input
 											type="checkbox"
 											id="child-seat"
-											name="seat"
+											name="addition"
+											value="Child seat"
 											data-calculate="2"
 											onChange={handleOptionsChange}
 										/>
@@ -247,7 +281,8 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="baby-chair"
-											name="chair"
+											name="addition"
+											value="Baby chair"
 											data-calculate="2"
 											onChange={handleOptionsChange}
 										/>
@@ -257,7 +292,8 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="gps"
-											name="gps"
+											name="addition"
+											value="GPS"
 											data-calculate="1"
 											onChange={handleOptionsChange}
 										/>
@@ -267,7 +303,8 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="roof-rack"
-											name="rack"
+											name="addition"
+											value="Roof rack"
 											data-calculate="3"
 											onChange={handleOptionsChange}
 										/>
@@ -278,19 +315,18 @@ const CarDetailsPage = () => {
 									Total: <span>${totalPrice}.00</span> / day
 								</p>
 							</div>
-							{!valid && (
+							{!isValid && wasValidated && (
 								<span className={classes.validationError}>
 									Wprowadź wszystkie wymagane informacje.
 								</span>
 							)}
 							<button
 								className={classes.rentButton}
-								onClick={handleRentButton}
-								// disabled={!valid}
+								onClick={handleValidation}
 							>
 								Rent Now
 							</button>
-						</div>
+						</form>
 					</div>
 				</div>
 			</Container>

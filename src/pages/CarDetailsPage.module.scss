@@ -166,11 +166,12 @@
 		border: 1px solid var(--border-color);
 	}
 	.error {
+		box-shadow: 0 0 10px rgba(214, 35, 12, 0.2);
 		border: 2px solid var(--red-color);
 	}
 }
 
-.form {
+.additionalOptions {
 	padding: 1.5rem 0;
 	display: flex;
 	flex-direction: column;

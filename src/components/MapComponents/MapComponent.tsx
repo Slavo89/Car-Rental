@@ -12,7 +12,11 @@ const DEFAULT_LOCATION: LatLng = { lat: 52.2296756, lng: 21.0122287 };
 
 setKey(import.meta.env.VITE_GOOGLE_KEY);
 
-const MapComponent = ({ location, onValidate }: { location?: string, onValidate: boolean }) => {
+const MapComponent: React.FC<{
+	location?: string;
+	onValidate: boolean;
+	onWasValidated: boolean;
+}> = (props) => {
 	const [libraries] = useState(['places']); // preventing error on useLoadScript
 
 	const [selectedLocation, setSelectedLocation] =
@@ -29,15 +33,15 @@ const MapComponent = ({ location, onValidate }: { location?: string, onValidate:
 	});
 
 	useEffect(() => {
-		if (location) {
-			fromAddress(location)
+		if (props.location) {
+			fromAddress(props.location)
 				.then(({ results }) => {
 					const { lat, lng } = results[0].geometry.location;
 					setSelectedLocation({ lat, lng });
 				})
 				.catch(console.error);
 		}
-	}, [location]);
+	}, [props.location]);
 
 	if (!isLoaded) return <LoadingIndicator />;
 	return (
@@ -46,7 +50,8 @@ const MapComponent = ({ location, onValidate }: { location?: string, onValidate:
 			<div className={classes.placesContainer}>
 				<PlacesAutocomplete
 					setSelected={setSelectedLocation}
-					onValidate={onValidate}
+					onValidate={props.onValidate}
+					onWasValidated={props.onWasValidated}
 				/>
 			</div>
 			<GoogleMap
@@ -56,11 +61,13 @@ const MapComponent = ({ location, onValidate }: { location?: string, onValidate:
 				options={{
 					streetViewControl: false,
 					mapTypeControl: false,
+					
 				}}
 			>
-				<MarkerF position={selectedLocation} />
+				<MarkerF position={selectedLocation}/>
 			</GoogleMap>
 		</>
 	);
 };
+
 export default MapComponent;
