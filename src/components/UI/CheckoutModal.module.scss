@@ -1,0 +1,20 @@
+.checkoutModal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    padding: 3rem 5rem;
+}
+
+.closeButton {
+    all: unset;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 2rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+
+}
+
+

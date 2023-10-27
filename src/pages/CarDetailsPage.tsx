@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import classes from './CarDetailsPage.module.scss';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import Container from '../components/UI/Container';
-import { useLoaderData, useNavigate } from 'react-router-dom';
 import { fetchCarDetails, queryClient } from '../util/http';
 import { useSearchValueContext } from '../context/SearchValueContext';
 import { ExtendedData } from '../util/types';
-import { useState } from 'react';
+import Container from '../components/UI/Container';
 import MapComponent from '../components/MapComponents/MapComponent';
+import CheckoutModal from '../components/UI/CheckoutModal';
 
 const CarDetailsPage = () => {
 	const DATA = useLoaderData() as ExtendedData;
@@ -42,7 +43,10 @@ const CarDetailsPage = () => {
 		setWasValidated(true);
 		const newValidation = {
 			pickupDate: !!context?.pickupDate,
-			returnDate: !!context?.returnDate,
+			returnDate:
+				!!context?.returnDate &&
+				!!context.pickupDate &&
+				context.returnDate >= context?.pickupDate,
 			location: !!context?.location,
 		};
 
@@ -61,16 +65,31 @@ const CarDetailsPage = () => {
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const fd = new FormData(event.currentTarget);
-		const data = Object.fromEntries(fd.entries());
-		const additions = fd.getAll('addition') as unknown as FormDataEntryValue;
-		// const additions = fd.getAll('addition');
-		
-		data.additions = additions;
-		console.log(data);
-		console.log(additions);
+		const additions = fd.getAll('additions');
+
+		const data = {
+			...Object.fromEntries(fd.entries()),
+			additions: additions,
+		};
+		setIsValid(true);
+		setIsModalOpen(true);
 	};
 
-	// console.log(validateInputs);
+	// HANDLING MODAL STATE
+	const [isModalOpen, setIsModalOpen] = useState(true);
+	// const modalRef = useRef<HTMLDialogElement | null>(null);
+
+	// useEffect(() => {
+	// 	const dialog = modalRef.current;
+	// 	if (dialog) {
+	// 		if (isModalOpen) {
+	// 			dialog.showModal();
+	// 		} else {
+	// 			dialog.close();
+	// 		}
+	// 	}
+	// }, [isModalOpen]);
+
 	return (
 		<main>
 			<Container>
@@ -219,10 +238,9 @@ const CarDetailsPage = () => {
 								aria-label="Choose pickup and return date"
 								className={classes.heroCalendarOptions}
 							>
-								<label htmlFor="pickup-date">
+								<label>
 									Pick-Up
 									<input
-										id="dateInput"
 										type="date"
 										name="pickup-date"
 										min={context?.getTodayDate()}
@@ -238,10 +256,9 @@ const CarDetailsPage = () => {
 										required
 									/>
 								</label>
-								<label htmlFor="return-date">
+								<label>
 									Return
 									<input
-										id="dateInput"
 										type="date"
 										name="return-date"
 										min={context?.pickupDate}
@@ -270,7 +287,7 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="child-seat"
-											name="addition"
+											name="additions"
 											value="Child seat"
 											data-calculate="2"
 											onChange={handleOptionsChange}
@@ -281,7 +298,7 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="baby-chair"
-											name="addition"
+											name="additions"
 											value="Baby chair"
 											data-calculate="2"
 											onChange={handleOptionsChange}
@@ -292,7 +309,7 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="gps"
-											name="addition"
+											name="additions"
 											value="GPS"
 											data-calculate="1"
 											onChange={handleOptionsChange}
@@ -303,7 +320,7 @@ const CarDetailsPage = () => {
 										<input
 											type="checkbox"
 											id="roof-rack"
-											name="addition"
+											name="additions"
 											value="Roof rack"
 											data-calculate="3"
 											onChange={handleOptionsChange}
@@ -329,6 +346,12 @@ const CarDetailsPage = () => {
 						</form>
 					</div>
 				</div>
+
+				<CheckoutModal
+					isOpen={isModalOpen}
+					onClose={() => setIsModalOpen(false)}
+					// data={data}
+				/>
 			</Container>
 		</main>
 	);

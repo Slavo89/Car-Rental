@@ -12,11 +12,13 @@ const DEFAULT_LOCATION: LatLng = { lat: 52.2296756, lng: 21.0122287 };
 
 setKey(import.meta.env.VITE_GOOGLE_KEY);
 
-const MapComponent: React.FC<{
+type Props = {
 	location?: string;
 	onValidate: boolean;
 	onWasValidated: boolean;
-}> = (props) => {
+};
+
+const MapComponent = (props: Props) => {
 	const [libraries] = useState(['places']); // preventing error on useLoadScript
 
 	const [selectedLocation, setSelectedLocation] =
@@ -61,10 +63,9 @@ const MapComponent: React.FC<{
 				options={{
 					streetViewControl: false,
 					mapTypeControl: false,
-					
 				}}
 			>
-				<MarkerF position={selectedLocation}/>
+				<MarkerF position={selectedLocation} />
 			</GoogleMap>
 		</>
 	);

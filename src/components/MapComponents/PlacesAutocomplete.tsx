@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './PlacesAutocomplete.module.scss';
 import usePlacesAutocomplete, {
 	LatLng,
@@ -15,27 +15,14 @@ import {
 import '@reach/combobox/styles.css';
 import { useSearchValueContext } from '../../context/SearchValueContext';
 
-const PlacesAutocomplete: React.FC<{
+type Props = {
 	setSelected: (location: LatLng) => void;
 	onValidate: boolean;
 	onWasValidated: boolean;
-}> = (props) => {
+};
+
+const PlacesAutocomplete = (props: Props) => {
 	const context = useSearchValueContext();
-
-	// const handleDelayedChange = (event) => {
-	// 	// Opuść poprzednią aktywną timeOut, jeśli istnieje
-
-	// 	// Ustaw nowy timeOut, aby odroczyć żądanie
-	// 	setValue(event.target.value);
-	// 	context?.setLocation(event.target.value);
-	// 	const searchTimeout = setTimeout(() => {
-	// 		// Wykonaj żądanie lub inną operację, np. pobranie sugestii
-	// 		// na podstawie wprowadzonego tekstu
-	// 	}, 500); // Dopuszczalne opóźnienie (np. 500 ms)
-	// 	clearTimeout(searchTimeout);
-	// 	console.log(context?.location, '- context');
-	// 	console.log(value, ' - value');
-	// };
 
 	const {
 		ready,
@@ -55,15 +42,21 @@ const PlacesAutocomplete: React.FC<{
 		context?.setLocation(address);
 	};
 
+	useEffect(() => {
+		if (context?.location) {
+			setValue(context?.location);
+		}
+	}, [context?.location, setValue]);
+
 	return (
 		<Combobox onSelect={handleSelect}>
 			<ComboboxInput
-				value={context?.location ? context.location : value}
+				value={value}
+				// value={context?.location ? context.location : value}
 				onChange={(event) => {
 					setValue(event.target.value);
-					context?.setLocation(event.target.value);
+					// context?.setLocation(event.target.value);
 				}}
-				// onChange={handleDelayedChange}
 				disabled={!ready}
 				className={
 					!props.onValidate && props.onWasValidated
