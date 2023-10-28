@@ -67,28 +67,36 @@ const CarDetailsPage = () => {
 		const fd = new FormData(event.currentTarget);
 		const additions = fd.getAll('additions');
 
+		// setSummaryData({
+		// 	...summaryData,
+		// 	...Object.fromEntries(fd.entries()),
+		// 	additions: additions,
+		// });
 		const data = {
 			...Object.fromEntries(fd.entries()),
 			additions: additions,
+			// additions: Array.from(additions),
 		};
 		setIsValid(true);
 		setIsModalOpen(true);
+		setSummaryData({ ...summaryData, ...data });
+
+		// console.log(summaryData);
 	};
 
-	// HANDLING MODAL STATE
-	const [isModalOpen, setIsModalOpen] = useState(true);
-	// const modalRef = useRef<HTMLDialogElement | null>(null);
+	const [summaryData, setSummaryData] = useState({
+		// additions: [],
+		model: DATA.model,
+		make: DATA.make,
+		year: DATA.year,
+		totalPrice: totalPrice,
+		// location: '',
+		// [`pickup-date`]: '',
+		// [`return-date`]: '',
+	});
 
-	// useEffect(() => {
-	// 	const dialog = modalRef.current;
-	// 	if (dialog) {
-	// 		if (isModalOpen) {
-	// 			dialog.showModal();
-	// 		} else {
-	// 			dialog.close();
-	// 		}
-	// 	}
-	// }, [isModalOpen]);
+	// HANDLING MODAL STATE
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	return (
 		<main>
@@ -179,7 +187,7 @@ const CarDetailsPage = () => {
 								</div>
 							</div>
 						</div>
-						<div className={classes.insurance}>
+						<article className={classes.insurance}>
 							<h4>Insurance</h4>
 							<p>
 								Collision Damage Waiver and Theft Protection are included with
@@ -193,8 +201,8 @@ const CarDetailsPage = () => {
 								have the excess amount available on your card when you pick up
 								the car.
 							</p>
-						</div>
-						<div className={classes.importantInfo}>
+						</article>
+						<article className={classes.importantInfo}>
 							<h4>Age requirements</h4>
 							<p>The minimum rental age for this car is 18 years.</p>
 							<h4>Getting a car</h4>
@@ -211,7 +219,7 @@ const CarDetailsPage = () => {
 								(which will be blocked on the card during the rental).
 							</p>
 							<p>Cash and debit cards are not accepted.</p>
-						</div>
+						</article>
 						<div className={classes.features}>
 							<h4>Following for free</h4>
 							<ul className={classes.list}>
@@ -329,7 +337,7 @@ const CarDetailsPage = () => {
 									</label>
 								</div>
 								<p className={classes.totalAmount}>
-									Total: <span>${totalPrice}.00</span> / day
+									Total: <span>${totalPrice.toFixed(2)}</span> / day
 								</p>
 							</div>
 							{!isValid && wasValidated && (
@@ -350,7 +358,7 @@ const CarDetailsPage = () => {
 				<CheckoutModal
 					isOpen={isModalOpen}
 					onClose={() => setIsModalOpen(false)}
-					// data={data}
+					data={summaryData}
 				/>
 			</Container>
 		</main>

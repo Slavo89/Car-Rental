@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import classes from './CheckoutModal.module.scss';
 import { useRef } from 'react';
+import { summaryData } from '../../util/types';
 
-const CheckoutModal = (props: {
-	isOpen: unknown;
+type Props = {
+	isOpen: boolean;
 	onClose: React.MouseEventHandler<HTMLButtonElement> | undefined;
-}) => {
+	data: summaryData;
+};
+
+const CheckoutModal = (props: Props) => {
 	const modalRef = useRef<HTMLDialogElement | null>(null);
 	useEffect(() => {
 		const dialog = modalRef.current;
@@ -15,6 +19,12 @@ const CheckoutModal = (props: {
 			} else {
 				dialog.close();
 			}
+		}
+
+		if (props.isOpen) {
+			document.body.style.overflowY = 'hidden';
+		} else {
+			document.body.style.overflowY = 'unset';
 		}
 	}, [props.isOpen]);
 	return (
@@ -28,22 +38,48 @@ const CheckoutModal = (props: {
 			>
 				&times;
 			</button>
+			<h4 className={classes.title}>Your order</h4>
 			<div className={classes.summary}>
-                <h4>Rental summary</h4>
-                <p>Car : Ford Focus</p>
-				<p>Check In : 25-10-23</p>
-				<p>Check Out: 29-10-23</p>
-                <p>Check In and Check Out Localization: Kraków</p>
-                <ul>Additions:
-                    <li>Child seat</li>
-                    <li>Baby chair</li>
-                    <li>GPS</li>
-                    <li>Roof Rack</li>
-                </ul>
-				<p>Price per day: $ 25</p>
-				<p>Total price: $ 125</p>
-            </div>
-            <button>Accept</button>
+				{/* <div> */}
+					<p>
+						{props.data.make} {props.data.model} {props.data.year}
+					</p>
+				{/* </div> */}
+				<div>
+					<p>Check In :</p>
+					<span>{props.data['pickup-date']}</span>
+				</div>
+				<div>
+					<p>Check Out : </p>
+					<span>{props.data['return-date']}</span>
+				</div>
+				<div>
+					<p>Car pickup location :</p>
+					<span>{props.data.location}</span>
+				</div>
+				{props.data.additions && (
+					<ul className={classes.accesoriesList}>
+						Additional options :
+						{/* <li>Child seat</li>
+					<li>Baby chair</li>
+					<li>GPS</li>
+					<li>Roof Rack</li> */}
+						{props.data.additions.map((option, index) => (
+							<li key={index}>{option.toString()}</li>
+						))}
+					</ul>
+				)}
+				<div>
+					<p>Total price :</p>
+					<span>$ {props.data.totalPrice.toFixed(2)}</span>
+				</div>
+			</div>
+			<button
+				className={classes.bookButton}
+				onClick={props.onClose}
+			>
+				Place order
+			</button>
 		</dialog>
 	);
 };

@@ -3,18 +3,88 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-    padding: 3rem 5rem;
+	width: 100%;
+    max-width: 600px;
+	padding: 5rem 2.5rem;
+	border: none;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
 }
 
 .closeButton {
-    all: unset;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 2rem;
-    font-size: 2.5rem;
-    cursor: pointer;
-
+	all: unset;
+	position: absolute;
+	top: .5rem;
+	right: .5rem;
+	padding: 0 2rem;
+	font-size: 2.5rem;
+	cursor: pointer;
 }
 
+.title {
+	text-align: center;
+	margin-bottom: 4rem;
+	align-self: center;
+	border-bottom: none;
+}
 
+.summary {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	& > * {
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border-color);
+		display: flex;
+		justify-content: space-between;
+		&:last-child {
+			padding-top: 1rem;
+			font-weight: bold;
+			font-size: 1.8rem;
+		}
+        &:first-child {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+	}
+
+	.accesoriesList {
+		list-style: none;
+		flex-direction: column;
+		li {
+			color: var(--font-grey);
+			font-size: 1.5rem;
+			padding: 0.3rem;
+		}
+	}
+}
+.bookButton {
+	margin-top: 4rem;
+	width: 100%;
+	padding: 1.5rem 2.5rem;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--blue-color);
+	color: var(--font-white);
+	text-transform: uppercase;
+	cursor: pointer;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s;
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+	}
+}
+
+@media not (prefers-reduced-motion) {
+	.bookButton:hover {
+		scale: 1.05;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+	}
+}
+
+@media (width >=660px) {
+	.checkoutModal {
+		padding: 5rem 5rem;
+	}
+}

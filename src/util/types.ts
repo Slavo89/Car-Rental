@@ -1,7 +1,7 @@
 export type Data = {
 	id: string;
 	img: string;
-	index?: number;
+	// index?: number;
 	consumption: number;
 	door: number;
 	make: string;
@@ -64,4 +64,15 @@ export type AppContextData = {
 	returnDate: string | undefined;
 	setReturnDate: React.Dispatch<React.SetStateAction<string | undefined>>;
 	getTodayDate: () => string;
+};
+
+export type summaryData = {
+	model: string;
+	make: string;
+	year: number;
+	additions?: FormDataEntryValue[];
+	location?: string;
+	[`pickup-date`]?: string;
+	[`return-date`]?: string;
+	totalPrice: number;
 };
