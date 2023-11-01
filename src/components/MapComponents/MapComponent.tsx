@@ -24,8 +24,8 @@ const MapComponent = (props: Props) => {
 		useState<LatLng>(DEFAULT_LOCATION);
 
 	const { isLoaded } = useLoadScript({
-		// googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
-		googleMapsApiKey: $VITE_GOOGLE_KEY,
+		googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
+
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		//@ts-ignore
 		libraries: libraries,
@@ -49,7 +49,7 @@ const MapComponent = (props: Props) => {
 	return (
 		<>
 			<h4>Choose pickup location</h4>
-			<p> key {import.meta.env.VITE_GOOGLE_KEY}</p>
+			<p> key </p>
 			<div className={classes.placesContainer}>
 				<PlacesAutocomplete
 					setSelected={setSelectedLocation}
