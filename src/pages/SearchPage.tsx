@@ -80,21 +80,21 @@ const SearchPage: React.FC = () => {
 	// CAR CLASS FILTERING
 	const categoryBoxes = [
 		{
-			imageSrc: '/public/SearchImages/B Class.webp',
+			imageSrc: '/SearchImages/B Class.webp',
 
 			class: 'B',
 		},
 		{
-			imageSrc: '/public/SearchImages/C Class.webp',
+			imageSrc: '/SearchImages/C Class.webp',
 
 			class: 'C',
 		},
 		{
-			imageSrc: '/public/SearchImages/D Class.webp',
+			imageSrc: '/SearchImages/D Class.webp',
 
 			class: 'D',
 		},
-		{ imageSrc: '/public/SearchImages/SUV.webp', alt: 'SUV', class: 'SUV' },
+		{ imageSrc: '/SearchImages/SUV.webp', alt: 'SUV', class: 'SUV' },
 	];
 
 	const [activeClasses, setActiveClasses] = useState<string[]>([]);
