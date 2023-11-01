@@ -16,7 +16,6 @@ type Props = {
 	onValidate: boolean;
 	onWasValidated: boolean;
 };
-console.log(import.meta.env.VITE_GOOGLE_KEY);
 
 const MapComponent = (props: Props) => {
 	const [libraries] = useState(['places']); // preventing error on useLoadScript
@@ -49,6 +48,7 @@ const MapComponent = (props: Props) => {
 	return (
 		<>
 			<h4>Choose pickup location</h4>
+			<p>{import.meta.env.VITE_GOOGLE_KEY}</p>
 			<div className={classes.placesContainer}>
 				<PlacesAutocomplete
 					setSelected={setSelectedLocation}
