@@ -1,2 +1,6 @@
+[build]
+  command = "npm run build"  # lub komenda, którą używasz do budowy projektu
+  publish = "dist"  # lub katalog, w którym znajduje się wynik budowy
+
 [build.environment]
   VITE_GOOGLE_KEY = $VITE_GOOGLE_KEY
