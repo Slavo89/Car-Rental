@@ -230,7 +230,7 @@ const SearchPage: React.FC = () => {
 						) : (
 							<ErrorBlock
 								title="Sorry..."
-								message="No car available!"
+								message="No cars available!"
 							/>
 						)}
 					</section>
