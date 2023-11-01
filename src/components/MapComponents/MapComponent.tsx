@@ -16,6 +16,7 @@ type Props = {
 	onValidate: boolean;
 	onWasValidated: boolean;
 };
+console.log(import.meta.env.VITE_GOOGLE_KEY);
 
 const MapComponent = (props: Props) => {
 	const [libraries] = useState(['places']); // preventing error on useLoadScript
