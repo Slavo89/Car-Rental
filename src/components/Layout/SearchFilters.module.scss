@@ -54,6 +54,7 @@ input[type='checkbox'] {
 	background-color: var(--white-color);
 	z-index: 100;
 	transition: left 0.5s;
+	overflow-y: auto;
 	&.show {
 		left: 0;
 	}
