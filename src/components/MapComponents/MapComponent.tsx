@@ -24,7 +24,8 @@ const MapComponent = (props: Props) => {
 		useState<LatLng>(DEFAULT_LOCATION);
 
 	const { isLoaded } = useLoadScript({
-		googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
+		// googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
+		googleMapsApiKey: $VITE_GOOGLE_KEY,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		//@ts-ignore
 		libraries: libraries,
