@@ -24,8 +24,16 @@ const CarDetailsPage = () => {
 			const calculateValue = +dataCalculate;
 			if (event.target.checked) {
 				setTotalPrice((prevPrice) => prevPrice + calculateValue);
+				setSummaryData((prevData) => ({
+					...prevData,
+					totalPrice: totalPrice + calculateValue,
+				}));
 			} else {
 				setTotalPrice((prevPrice) => prevPrice - calculateValue);
+				setSummaryData((prevData) => ({
+					...prevData,
+					totalPrice: totalPrice - calculateValue,
+				}));
 			}
 		}
 	};
@@ -62,38 +70,27 @@ const CarDetailsPage = () => {
 		}
 	};
 
+	// passing the data to checkout modal
+	const [summaryData, setSummaryData] = useState({
+		model: DATA.model,
+		make: DATA.make,
+		year: DATA.year,
+		totalPrice: totalPrice,
+	});
+
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const fd = new FormData(event.currentTarget);
 		const additions = fd.getAll('additions');
 
-		// setSummaryData({
-		// 	...summaryData,
-		// 	...Object.fromEntries(fd.entries()),
-		// 	additions: additions,
-		// });
 		const data = {
 			...Object.fromEntries(fd.entries()),
 			additions: additions,
-			// additions: Array.from(additions),
 		};
 		setIsValid(true);
 		setIsModalOpen(true);
 		setSummaryData({ ...summaryData, ...data });
-
-		// console.log(summaryData);
 	};
-
-	const [summaryData, setSummaryData] = useState({
-		// additions: [],
-		model: DATA.model,
-		make: DATA.make,
-		year: DATA.year,
-		totalPrice: totalPrice,
-		// location: '',
-		// [`pickup-date`]: '',
-		// [`return-date`]: '',
-	});
 
 	// HANDLING MODAL STATE
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -358,7 +355,7 @@ const CarDetailsPage = () => {
 				<CheckoutModal
 					isOpen={isModalOpen}
 					onClose={() => setIsModalOpen(false)}
-					data={summaryData}
+					summaryData={summaryData}
 				/>
 			</Container>
 		</main>

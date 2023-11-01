@@ -1,7 +1,7 @@
 export type Data = {
+	index?: number | unknown;
 	id: string;
 	img: string;
-	// index?: number;
 	consumption: number;
 	door: number;
 	make: string;
@@ -72,7 +72,7 @@ export type summaryData = {
 	year: number;
 	additions?: FormDataEntryValue[];
 	location?: string;
-	[`pickup-date`]?: string;
-	[`return-date`]?: string;
+	[`pickup-date`]?: string | undefined;
+	[`return-date`]?: string | undefined;
 	totalPrice: number;
 };

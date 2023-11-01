@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import classes from './PlacesAutocomplete.module.scss';
 import usePlacesAutocomplete, {
 	LatLng,
@@ -44,18 +44,17 @@ const PlacesAutocomplete = (props: Props) => {
 
 	useEffect(() => {
 		if (context?.location) {
-			setValue(context?.location);
+			setValue(context.location);
 		}
-	}, [context?.location, setValue]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<Combobox onSelect={handleSelect}>
 			<ComboboxInput
 				value={value}
-				// value={context?.location ? context.location : value}
 				onChange={(event) => {
 					setValue(event.target.value);
-					// context?.setLocation(event.target.value);
 				}}
 				disabled={!ready}
 				className={

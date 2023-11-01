@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import classes from './MapComponent.module.scss';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
-
 import { fromAddress, setKey } from 'react-geocode';
 import PlacesAutocomplete from './PlacesAutocomplete';
 import LoadingIndicator from '../UI/LoadingIndicator';

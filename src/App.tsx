@@ -1,45 +1,71 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-import MainPage from './pages/MainPage';
-import CarDetailsPage, {
-	loader as carDetailsLoader,
-} from './pages/CarDetailsPage';
-import Root from './pages/Root';
-import SearchPage, { loader as searchPageLoader } from './pages/SearchPage';
+// import MainPage from './pages/MainPage';
+import { loader as carDetailsLoader } from './pages/CarDetailsPage';
+// import Root from './pages/Root';
+import { loader as searchPageLoader } from './pages/SearchPage';
 import { queryClient } from './util/http';
 import { AppContextProvider } from './context/SearchValueContext';
 import ErrorBlock from './components/UI/ErrorBlock';
+import LoadingIndicator from './components/UI/LoadingIndicator';
+
+const Root = React.lazy(() => import('./pages/Root'));
+const MainPage = React.lazy(() => import('./pages/MainPage'));
+const SearchPage = React.lazy(() => import('./pages/SearchPage'));
+const CarDetailsPage = React.lazy(() => import('./pages/CarDetailsPage'));
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Root />,
+		element: (
+			<React.Suspense fallback={<LoadingIndicator />}>
+				<Root />
+			</React.Suspense>
+		),
+		errorElement: (
+			<ErrorBlock
+				title="Something went wrong"
+				message="An error occurred while retrieving car data"
+			/>
+		),
 
 		children: [
 			{
 				index: true,
-				element: <MainPage />,
+				element: (
+					<React.Suspense fallback={<LoadingIndicator />}>
+						<MainPage />
+					</React.Suspense>
+				),
 			},
 			{
 				path: '/:id',
-				element: <CarDetailsPage />,
+				element: (
+					<React.Suspense fallback={<LoadingIndicator />}>
+						<CarDetailsPage />
+					</React.Suspense>
+				),
 				loader: carDetailsLoader,
 				errorElement: (
 					<ErrorBlock
-						title={'Error'}
-						message={'An error occured'}
+						title="Something went wrong"
+						message="An error occurred while fetching the car details"
 					/>
 				),
 			},
 			{
 				path: '/search',
-				element: <SearchPage />,
+				element: (
+					<React.Suspense fallback={<LoadingIndicator />}>
+						<SearchPage />
+					</React.Suspense>
+				),
 				loader: searchPageLoader,
 				errorElement: (
 					<ErrorBlock
-						title={'error'}
-						message={'An error occured'}
+						title="Something went wrong"
+						message="An error occurred while retrieving car data"
 					/>
 				),
 			},

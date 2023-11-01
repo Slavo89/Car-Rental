@@ -1,6 +1,10 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	queryCache: new QueryCache({
+		onError: (error) => console.error(error.message),
+	}),
+});
 
 export async function fetchVehicles() {
 	const url =
@@ -23,8 +27,7 @@ export async function fetchCarDetails(id: string | undefined) {
 	);
 
 	if (!response.ok) {
-		const error = new Error('An error occurred while fetching the event');
-		// const message = 'An error occurred while fetching the event';
+		const error = new Error('An error occurred while fetching the car details');
 		throw error;
 	}
 
@@ -32,20 +35,3 @@ export async function fetchCarDetails(id: string | undefined) {
 
 	return details;
 }
-
-export async function fetchMap(enteredAddress: string) {
-	const response = await fetch(
-		`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(enteredAddress)}&key=AIzaSyCsb-KlrUNZTfTWjz1Fof6L4-BGk71HfHI`
-		// `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCsb-KlrUNZTfTWjz1Fof6L4-BGk71HfHI`
-	);
-
-	if (!response.ok) {
-		const error = new Error('An error occurred while fetching the event');
-		throw error;
-	}
-
-	const details = await response.json();
-
-	return details;
-}
-

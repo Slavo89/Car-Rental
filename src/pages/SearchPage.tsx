@@ -3,11 +3,12 @@ import classes from './SearchPage.module.scss';
 import Container from '../components/UI/Container';
 import SearchFilters from '../components/Layout/SearchFilters';
 import SearchPageCard from '../components/Layout/Cards/SearchPageCard';
+import GoTopButton from '../components/UI/GoTopButton';
+import Pagination from '../components/UI/Pagination';
+import ErrorBlock from '../components/UI/ErrorBlock';
 import { fetchVehicles, queryClient } from '../util/http';
 import { useLoaderData } from 'react-router-dom';
-import Pagination from '../components/UI/Pagination';
 import { SelectedFilters, VehicleData } from '../util/types';
-import GoTopButton from '../components/UI/GoTopButton';
 
 const CARS_PER_PAGE = 6;
 
@@ -227,7 +228,10 @@ const SearchPage: React.FC = () => {
 								totalItems={totalItems}
 							/>
 						) : (
-							<p>No matched cars :(</p>
+							<ErrorBlock
+								title="Sorry..."
+								message="No car available!"
+							/>
 						)}
 					</section>
 				</div>

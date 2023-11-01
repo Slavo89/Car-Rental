@@ -6,27 +6,41 @@ import { summaryData } from '../../util/types';
 type Props = {
 	isOpen: boolean;
 	onClose: React.MouseEventHandler<HTMLButtonElement> | undefined;
-	data: summaryData;
+	summaryData: summaryData;
 };
 
-const CheckoutModal = (props: Props) => {
+const CheckoutModal = ({ isOpen, onClose, summaryData }: Props) => {
 	const modalRef = useRef<HTMLDialogElement | null>(null);
 	useEffect(() => {
 		const dialog = modalRef.current;
 		if (dialog) {
-			if (props.isOpen) {
+			if (isOpen) {
 				dialog.showModal();
 			} else {
 				dialog.close();
 			}
 		}
 
-		if (props.isOpen) {
+		if (isOpen) {
 			document.body.style.overflowY = 'hidden';
 		} else {
 			document.body.style.overflowY = 'unset';
 		}
-	}, [props.isOpen]);
+	}, [isOpen, summaryData.totalPrice]);
+
+	// calculating days of rent
+	let daysOfRent: number | undefined = 1;
+	if (summaryData['pickup-date'] && summaryData['return-date']) {
+		if (summaryData['pickup-date'] === summaryData['return-date']) {
+			return;
+		} else {
+			const pickupDate = new Date(summaryData['pickup-date']);
+			const returnDate = new Date(summaryData['return-date']);
+			const timeDiff = returnDate.getTime() - pickupDate.getTime();
+			daysOfRent = Math.ceil(timeDiff / (1000 * 3600 * 24));
+		}
+	}
+
 	return (
 		<dialog
 			ref={modalRef}
@@ -34,49 +48,48 @@ const CheckoutModal = (props: Props) => {
 		>
 			<button
 				className={classes.closeButton}
-				onClick={props.onClose}
+				onClick={onClose}
 			>
 				&times;
 			</button>
 			<h4 className={classes.title}>Your order</h4>
 			<div className={classes.summary}>
-				{/* <div> */}
-					<p>
-						{props.data.make} {props.data.model} {props.data.year}
-					</p>
-				{/* </div> */}
+				<p>
+					{summaryData.make} {summaryData.model} {summaryData.year}
+				</p>
+
 				<div>
 					<p>Check In :</p>
-					<span>{props.data['pickup-date']}</span>
+					<span>{summaryData['pickup-date']}</span>
 				</div>
 				<div>
 					<p>Check Out : </p>
-					<span>{props.data['return-date']}</span>
+					<span>{summaryData['return-date']}</span>
 				</div>
 				<div>
 					<p>Car pickup location :</p>
-					<span>{props.data.location}</span>
+					<span>{summaryData.location}</span>
 				</div>
-				{props.data.additions && (
+				{summaryData.additions && (
 					<ul className={classes.accesoriesList}>
 						Additional options :
 						{/* <li>Child seat</li>
 					<li>Baby chair</li>
 					<li>GPS</li>
 					<li>Roof Rack</li> */}
-						{props.data.additions.map((option, index) => (
+						{summaryData.additions.map((option, index) => (
 							<li key={index}>{option.toString()}</li>
 						))}
 					</ul>
 				)}
 				<div>
 					<p>Total price :</p>
-					<span>$ {props.data.totalPrice.toFixed(2)}</span>
+					<span>$ {(summaryData.totalPrice * daysOfRent).toFixed(2)}</span>
 				</div>
 			</div>
 			<button
 				className={classes.bookButton}
-				onClick={props.onClose}
+				onClick={onClose}
 			>
 				Place order
 			</button>
