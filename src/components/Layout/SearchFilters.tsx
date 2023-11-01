@@ -146,14 +146,6 @@ const SearchFilters = (props: Props) => {
 							/>
 						</label>
 					</fieldset>
-					{/* <button
-						aria-label="Search car button"
-						className={classes.searchBtn}
-						type="submit"
-						onClick={(event) => event.preventDefault()}
-					>
-						Search
-					</button> */}
 				</div>
 				<div className={classes.filters}>
 					<div className={classes.row}>

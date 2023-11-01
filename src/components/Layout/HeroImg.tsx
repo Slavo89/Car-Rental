@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchValueContext } from '../../context/SearchValueContext';
 
 const HeroImg: React.FC = () => {
-	// const ref = useRef()
 	const navigate = useNavigate();
 	const context = useSearchValueContext();
 
@@ -40,7 +39,6 @@ const HeroImg: React.FC = () => {
 						<input
 							id="location"
 							ref={locationRef}
-							// autoComplete='off'
 							onChange={(event) => context?.setLocation(event.target.value)}
 						/>
 					</fieldset>
@@ -78,7 +76,6 @@ const HeroImg: React.FC = () => {
 					<button
 						aria-label="Search car button"
 						className={classes.searchBtn}
-						// onClick={searchHandler}
 					>
 						Search
 					</button>

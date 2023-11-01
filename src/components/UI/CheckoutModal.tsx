@@ -73,10 +73,6 @@ const CheckoutModal = ({ isOpen, onClose, summaryData }: Props) => {
 				{summaryData.additions && (
 					<ul className={classes.accesoriesList}>
 						Additional options :
-						{/* <li>Child seat</li>
-					<li>Baby chair</li>
-					<li>GPS</li>
-					<li>Roof Rack</li> */}
 						{summaryData.additions.map((option, index) => (
 							<li key={index}>{option.toString()}</li>
 						))}

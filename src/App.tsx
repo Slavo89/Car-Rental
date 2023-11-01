@@ -1,9 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-// import MainPage from './pages/MainPage';
 import { loader as carDetailsLoader } from './pages/CarDetailsPage';
-// import Root from './pages/Root';
 import { loader as searchPageLoader } from './pages/SearchPage';
 import { queryClient } from './util/http';
 import { AppContextProvider } from './context/SearchValueContext';

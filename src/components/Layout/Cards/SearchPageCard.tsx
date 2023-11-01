@@ -54,7 +54,6 @@ const SearchPageCard = (props: Data) => {
 					<button
 						aria-label="Rent button"
 						className={classes.rentBtn}
-						// onClick={(event) => event.preventDefault()}
 					>
 						Rent Now
 					</button>
