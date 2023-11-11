@@ -77,7 +77,6 @@ input[type='checkbox'] {
 	flex-direction: column;
 	gap: 2rem;
 	background-color: var(--blue-color);
-	// border-radius: 5px;
 	h2 {
 		color: var(--font-white);
 	}
@@ -188,7 +187,11 @@ input[type='checkbox'] {
 	}
 }
 
-@media (width >= 770px) {
+@media (width >= 800px) {
+	.form {
+		padding: 3.5rem 1rem 2rem;
+	}
+
 	.showFiltersBtn {
 		display: none;
 	}
@@ -207,7 +210,7 @@ input[type='checkbox'] {
 	}
 }
 
-@media (width >= 1170px) {
+@media (width >= 1470px) {
 	.calendarOptions {
 		flex-direction: row;
 	}
