@@ -39,7 +39,6 @@ const HeroImg: React.FC = () => {
 						<input
 							id="location"
 							ref={locationRef}
-							onChange={(event) => context?.setLocation(event.target.value)}
 						/>
 					</fieldset>
 					<fieldset

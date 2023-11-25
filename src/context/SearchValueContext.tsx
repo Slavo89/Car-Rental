@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { AppContextData } from '../util/types';
 
-const AppContext = createContext<AppContextData | undefined>(undefined);
+export const AppContext = createContext<AppContextData | undefined>(undefined);
 
 export function AppContextProvider({
 	children,
@@ -9,7 +9,9 @@ export function AppContextProvider({
 	children: React.ReactNode;
 }) {
 	const [location, setLocation] = useState<string | undefined>('');
-	const [pickupDate, setPickupDate] = useState<string | undefined>(getTodayDate());
+	const [pickupDate, setPickupDate] = useState<string | undefined>(
+		getTodayDate()
+	);
 	const [returnDate, setReturnDate] = useState<string | undefined>('');
 
 	const contextData = {
