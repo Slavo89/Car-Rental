@@ -12,6 +12,7 @@ const MainPageCard = (props: Data) => {
 			tabIndex={props.disableFocus ? -1 : 0}
 			aria-hidden={props.disableFocus}
 			aria-label={`Slide ${props.index} of ${props.numberOfCars}`}
+			data-testid='carousel-card'
 		>
 			<img
 				src={props.img}
