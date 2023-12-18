@@ -8,7 +8,7 @@ import Pagination from '../components/UI/Pagination';
 import ErrorBlock from '../components/UI/ErrorBlock';
 import { fetchVehicles, queryClient } from '../util/http';
 import { useLoaderData } from 'react-router-dom';
-import { SelectedFilters, VehicleData } from '../util/types';
+import { type SelectedFilters, type VehicleData } from '../util/types';
 
 const CARS_PER_PAGE = 6;
 
@@ -250,3 +250,4 @@ export function loader() {
 		queryFn: fetchVehicles,
 	});
 }
+

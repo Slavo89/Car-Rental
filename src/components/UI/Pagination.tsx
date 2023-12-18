@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classes from './Pagination.module.scss';
-import { PaginationProps } from '../../util/types';
+import { type PaginationProps } from '../../util/types';
 
 const Pagination: React.FC<PaginationProps> = (props) => {
 	const [totalPages, setTotalPages] = useState(

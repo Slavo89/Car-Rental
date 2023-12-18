@@ -1,7 +1,7 @@
 import classes from './MainPageCard.module.scss';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 
-import { Data } from '../../../util/types';
+import { type Data } from '../../../util/types';
 import { Link } from 'react-router-dom';
 
 const MainPageCard = (props: Data) => {

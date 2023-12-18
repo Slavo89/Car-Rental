@@ -7,11 +7,11 @@ import { fetchVehicles } from '../../util/http';
 import { useQuery } from '@tanstack/react-query';
 import LoadingIndicator from '../UI/LoadingIndicator';
 
-import { ExtendedData } from '../../util/types';
+import { type ExtendedData } from '../../util/types';
 
 const RentalCars: React.FC = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-	
+
 	const { data, isPending, isError, error } = useQuery({
 		queryKey: ['vehicles'],
 		queryFn: fetchVehicles,

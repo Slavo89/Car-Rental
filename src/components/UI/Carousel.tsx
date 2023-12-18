@@ -3,7 +3,7 @@ import classes from './Carousel.module.scss';
 import MainPageCard from '../Layout/Cards/MainPageCard';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-import { ExtendedData } from '../../util/types';
+import { type ExtendedData } from '../../util/types';
 
 type Props = {
 	data: ExtendedData[];

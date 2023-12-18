@@ -1,5 +1,5 @@
 import classes from './SearchPageCard.module.scss';
-import { Data } from '../../../util/types';
+import { type Data } from '../../../util/types';
 import { Link } from 'react-router-dom';
 import { GiPerson, GiCarDoor, GiJerrycan } from 'react-icons/gi';
 

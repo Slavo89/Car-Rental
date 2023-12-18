@@ -5,7 +5,7 @@ import classes from './SearchFilters.module.scss';
 import { FaFilter } from 'react-icons/fa6';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import RangeSlider from '../UI/RangeSlider';
-import { SelectedFilters } from '../../util/types';
+import { type SelectedFilters } from '../../util/types';
 import { useSearchValueContext } from '../../context/SearchValueContext';
 
 interface Props {

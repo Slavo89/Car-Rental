@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import classes from './CheckoutModal.module.scss';
 import { useRef } from 'react';
-import { summaryData } from '../../util/types';
+import { type summaryData } from '../../util/types';
 
 type Props = {
 	isOpen: boolean;
